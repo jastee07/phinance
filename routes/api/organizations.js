@@ -10,7 +10,9 @@ const Organization = require("../../models/Organization");
 
 router.get("/test", (req, res) => res.json({ msg: "Organizations works" }));
 
-//POST Organization
+// @route   GET api/organization/register
+// @desc    Create a new organization
+// @access  Public
 router.post("/register", (req, res) => {
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
@@ -291,6 +293,39 @@ router.put(
           )
         );
     });
+  }
+);
+
+// @route   DELETE api/organization/budget/:bud_id/transactions/:tran_id
+// @desc    Delete transaction from a budget
+// @access  Private/Admin
+router.delete(
+  "/budget/:bud_id/transactions/:tran_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Organization.findById(req.user.organization)
+      .then(organization => {
+        if (req.user.role !== "admin") {
+          return res
+            .status(400)
+            .json({ unauthorized: "Must be an admin to access this page" });
+        }
+
+        if (
+          !organization.budgets
+            .id(req.params.bud_id)
+            .transactions.id(req.params.tran_id)
+        ) {
+          return res.status(404).json({ error: "Transaction does not exist" });
+        }
+        // Splice out of array
+        organization.budgets
+          .id(req.params.bud_id)
+          .transactions.pull({ _id: req.params.tran_id });
+        // Save
+        organization.save().then(organization => res.json({ success: true }));
+      })
+      .catch(err => res.status(404).json(err));
   }
 );
 
