@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const passport = require("passport");
 
 //Load User Model
 const User = require("../../models/User");
@@ -58,7 +59,7 @@ router.post("/register", (req, res) => {
 // @access  Private
 router.post(
   "/budget",
-  //passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     //const { errors, isValid } = validateExperienceInput(req.body);
 
@@ -67,8 +68,12 @@ router.post(
     //   // Return any errors with 400 status
     //   return res.status(400).json(errors);
     // }
-
-    Organization.findOne({ name: req.body.name }).then(organization => {
+    if (req.user.role !== "admin") {
+      return res
+        .status(400)
+        .json({ error: "User needs admin status to do this" });
+    }
+    Organization.findOneById(req.user.organization).then(organization => {
       const newBudget = {
         title: req.body.title,
         amount: req.body.amount,
@@ -83,39 +88,41 @@ router.post(
   }
 );
 
-// // @route   PUT api/organization/budget
-// // @desc    Update budget in organization
-// // @access  Private
-// router.put(
-//   "/budget",
-//   //passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     //const { errors, isValid } = validateExperienceInput(req.body);
+// @route   POST api/organization/budget/:bud_id/transactions
+// @desc    Add budget to organization
+// @access  Private
+router.post(
+  "/budget/:bud_id/transactions",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    //const { errors, isValid } = validateExperienceInput(req.body);
 
-//     // Check Validation
-//     // if (!isValid) {
-//     //   // Return any errors with 400 status
-//     //   return res.status(400).json(errors);
-//     // }
+    // Check Validation
+    // if (!isValid) {
+    //   // Return any errors with 400 status
+    //   return res.status(400).json(errors);
+    // }
+    if (req.user.role !== "admin") {
+      return res
+        .status(400)
+        .json({ error: "User needs admin status to do this" });
+    }
+    Organization.findById(req.user.organization).then(organization => {
+      const newTransaction = {
+        title: req.body.title,
+        amount: req.body.amount,
+        revenue: req.body.revenue
+      };
 
-//     Organization.findOne({ name: req.body.name }).then(organization => {
-//       const updateIndex = organization.budgets
-//         .map(item => item.title)
-//         .indexOf(req.params.bud_title);
+      // Add to budgets array
+      organization.budgets
+        .id(req.params.bud_id)
+        .transactions.unshift(newTransaction);
 
-//       // Get proper budget
-//       let budget = organization.budgets[updateIndex];
-
-//       budget = {
-//         title: req.body.title,
-//         amount: req.body.amount,
-//         revenue: req.body.revenue
-//       }
-
-//       organization.save().then(organization => res.json(organization));
-//     });
-//   }
-// );
+      organization.save().then(organization => res.json(organization));
+    });
+  }
+);
 
 // @route   DELETE api/organization/budget/:bud_title
 // @desc    Delete budget from organization
