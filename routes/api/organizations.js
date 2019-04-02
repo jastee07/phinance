@@ -134,10 +134,11 @@ router.put(
 
     Organization.findById(req.user.organization).then(organization => {
       // Add to budgets array
-      if (!organization) {
+      const id = req.params.id;
+      if (!organization.budgets.id(id)) {
         return res.status(404).json({ error: "Budget does not exist" });
       }
-      const id = req.params.id;
+
       organization.budgets.id(id).title = req.body.title;
       organization.budgets.id(id).amount = req.body.amount;
       organization.budgets.id(id).revenue = req.body.revenue;
@@ -231,6 +232,46 @@ router.post(
       organization.budgets
         .id(req.params.bud_id)
         .transactions.unshift(newTransaction);
+
+      organization.save().then(organization => res.json(organization));
+    });
+  }
+);
+
+// @route   PUT api/organization/budget/:bud_id/transactions/:tran_id
+// @desc    Edit a transaction
+// @access  Private/Admin
+router.put(
+  "/budget/:bud_id/transactions/:tran_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    //const { errors, isValid } = validateExperienceInput(req.body);
+
+    // Check Validation
+    // if (!isValid) {
+    //   // Return any errors with 400 status
+    //   return res.status(400).json(errors);
+    // }
+    if (req.user.role !== "admin") {
+      return res
+        .status(400)
+        .json({ error: "User needs admin status to do this" });
+    }
+    Organization.findById(req.user.organization).then(organization => {
+      // Add to budgets array
+      if (
+        !organization.budgets
+          .id(req.params.bud_id)
+          .transactions.id(req.params.tran_id)
+      ) {
+        return res.status(404).json({ error: "Transaction does not exist" });
+      }
+      organization.budgets
+        .id(req.params.bud_id)
+        .transactions.id(req.params.tran_id).title = req.body.title;
+      organization.budgets
+        .id(req.params.bud_id)
+        .transactions.id(req.params.tran_id).amount = req.body.amount;
 
       organization.save().then(organization => res.json(organization));
     });
