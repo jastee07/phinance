@@ -83,6 +83,40 @@ router.post(
   }
 );
 
+// // @route   PUT api/organization/budget
+// // @desc    Update budget in organization
+// // @access  Private
+// router.put(
+//   "/budget",
+//   //passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     //const { errors, isValid } = validateExperienceInput(req.body);
+
+//     // Check Validation
+//     // if (!isValid) {
+//     //   // Return any errors with 400 status
+//     //   return res.status(400).json(errors);
+//     // }
+
+//     Organization.findOne({ name: req.body.name }).then(organization => {
+//       const updateIndex = organization.budgets
+//         .map(item => item.title)
+//         .indexOf(req.params.bud_title);
+
+//       // Get proper budget
+//       let budget = organization.budgets[updateIndex];
+
+//       budget = {
+//         title: req.body.title,
+//         amount: req.body.amount,
+//         revenue: req.body.revenue
+//       }
+
+//       organization.save().then(organization => res.json(organization));
+//     });
+//   }
+// );
+
 // @route   DELETE api/organization/budget/:bud_title
 // @desc    Delete budget from organization
 // @access  Private
