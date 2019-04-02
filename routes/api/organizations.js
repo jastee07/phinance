@@ -107,7 +107,9 @@ router.post(
       // Add to budgets array
       organization.budgets.unshift(newBudget);
 
-      organization.save().then(organization => res.json(organization));
+      organization
+        .save()
+        .then(organization => res.json(organization.budgets[0]));
     });
   }
 );
@@ -143,7 +145,9 @@ router.put(
       organization.budgets.id(id).amount = req.body.amount;
       organization.budgets.id(id).revenue = req.body.revenue;
 
-      organization.save().then(organization => res.json(organization));
+      organization
+        .save()
+        .then(organization => res.json(organization.budgets.id(id)));
     });
   }
 );
@@ -169,7 +173,7 @@ router.delete(
         // Splice out of array
         organization.budgets.pull({ _id: req.params.id });
         // Save
-        organization.save().then(organization => res.json(organization));
+        organization.save().then(organization => res.json({ success: true }));
       })
       .catch(err => res.status(404).json(err));
   }
@@ -233,7 +237,11 @@ router.post(
         .id(req.params.bud_id)
         .transactions.unshift(newTransaction);
 
-      organization.save().then(organization => res.json(organization));
+      organization
+        .save()
+        .then(organization =>
+          res.json(organization.budgets.id(bud_id).transactions[0])
+        );
     });
   }
 );
@@ -273,7 +281,15 @@ router.put(
         .id(req.params.bud_id)
         .transactions.id(req.params.tran_id).amount = req.body.amount;
 
-      organization.save().then(organization => res.json(organization));
+      organization
+        .save()
+        .then(organization =>
+          res.json(
+            organization.budgets
+              .id(req.params.bud_id)
+              .transactions.id(req.params.tran_id)
+          )
+        );
     });
   }
 );
