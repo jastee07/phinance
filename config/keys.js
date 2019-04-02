@@ -1,4 +1,5 @@
 module.exports = {
-  mongoURI: "mongodb://localhost:27017/kolkin",
+  mongoURI:
+    "mongodb+srv://testUser:testUser@swecluster-pm31a.mongodb.net/test?retryWrites=true",
   secretOrKey: "secret"
 };
