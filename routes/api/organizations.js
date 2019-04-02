@@ -54,6 +54,30 @@ router.post("/register", (req, res) => {
   });
 });
 
+// @route   GET api/organization/budget/:id
+// @desc    Add budget to organization
+// @access  Private
+router.get(
+  "/budget/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    //const { errors, isValid } = validateExperienceInput(req.body);
+
+    // Check Validation
+    // if (!isValid) {
+    //   // Return any errors with 400 status
+    //   return res.status(400).json(errors);
+    // }
+    Organization.findById(req.user.organization).then(organization => {
+      const budget = organization.budgets.id(req.params.id);
+      if (!budget) {
+        return res.status(404).json({ error: "Budget does not exist" });
+      }
+      return res.json(budget);
+    });
+  }
+);
+
 // @route   POST api/organization/budget
 // @desc    Add budget to organization
 // @access  Private
@@ -150,8 +174,35 @@ router.delete(
   }
 );
 
+// @route   GET api/organization/budget/:bud_id/transactions/:tran_id
+// @desc    Get a transaction from a budget
+// @access  Private
+router.get(
+  "/budget/:bud_id/transactions/:tran_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    //const { errors, isValid } = validateExperienceInput(req.body);
+
+    // Check Validation
+    // if (!isValid) {
+    //   // Return any errors with 400 status
+    //   return res.status(400).json(errors);
+    // }
+    Organization.findById(req.user.organization).then(organization => {
+      const transaction = organization.budgets
+        .id(req.params.bud_id)
+        .transactions.id(req.params.tran_id);
+
+      if (!transaction) {
+        return res.status(404).json({ error: "Transaction does not exist" });
+      }
+      return res.json(transaction);
+    });
+  }
+);
+
 // @route   POST api/organization/budget/:bud_id/transactions
-// @desc    Add budget to organization
+// @desc    Add a transaction to a budget
 // @access  Private
 router.post(
   "/budget/:bud_id/transactions",
