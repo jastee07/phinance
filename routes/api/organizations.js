@@ -9,6 +9,7 @@ const Organization = require("../../models/Organization");
 
 router.get("/test", (req, res) => res.json({ msg: "Organizations works" }));
 
+//POST Organization
 router.post("/register", (req, res) => {
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
@@ -51,5 +52,92 @@ router.post("/register", (req, res) => {
     }
   });
 });
+
+// @route   POST api/organization/budget
+// @desc    Add budget to organization
+// @access  Private
+router.post(
+  "/budget",
+  //passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    //const { errors, isValid } = validateExperienceInput(req.body);
+
+    // Check Validation
+    // if (!isValid) {
+    //   // Return any errors with 400 status
+    //   return res.status(400).json(errors);
+    // }
+
+    Organization.findOne({ name: req.body.name }).then(organization => {
+      const newBudget = {
+        title: req.body.title,
+        amount: req.body.amount,
+        revenue: req.body.revenue
+      };
+
+      // Add to budgets array
+      organization.budgets.unshift(newBudget);
+
+      organization.save().then(organization => res.json(organization));
+    });
+  }
+);
+
+// // @route   PUT api/organization/budget
+// // @desc    Update budget in organization
+// // @access  Private
+// router.put(
+//   "/budget",
+//   //passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     //const { errors, isValid } = validateExperienceInput(req.body);
+
+//     // Check Validation
+//     // if (!isValid) {
+//     //   // Return any errors with 400 status
+//     //   return res.status(400).json(errors);
+//     // }
+
+//     Organization.findOne({ name: req.body.name }).then(organization => {
+//       const updateIndex = organization.budgets
+//         .map(item => item.title)
+//         .indexOf(req.params.bud_title);
+
+//       // Get proper budget
+//       let budget = organization.budgets[updateIndex];
+
+//       budget = {
+//         title: req.body.title,
+//         amount: req.body.amount,
+//         revenue: req.body.revenue
+//       }
+
+//       organization.save().then(organization => res.json(organization));
+//     });
+//   }
+// );
+
+// @route   DELETE api/organization/budget/:bud_title
+// @desc    Delete budget from organization
+// @access  Private
+router.delete(
+  "/budget/:bud_title",
+  //passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Organization.findOne({ name: req.body.name })
+      .then(organization => {
+        const removeIndex = organization.budgets
+          .map(item => item.title)
+          .indexOf(req.params.bud_title);
+
+        // Splice out of array
+        organization.budgets.splice(removeIndex, 1);
+
+        // Save
+        organization.save().then(organization => res.json(organization));
+      })
+      .catch(err => res.status(404).json(err));
+  }
+);
 
 module.exports = router;
