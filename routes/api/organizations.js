@@ -3,6 +3,11 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
+//Load Input Validation
+const validateOrgRegisterInput = require("../../validation/orgRegister");
+const validateUserRegisterInput = require("../../validation/userRegister");
+const validateBudgetInput = require("../../validation/budget");
+
 //Load User Model
 const User = require("../../models/User");
 //Load Organization Model
@@ -14,6 +19,21 @@ router.get("/test", (req, res) => res.json({ msg: "Organizations works" }));
 // @desc    Create a new organization
 // @access  Public
 router.post("/register", (req, res) => {
+  //Check validations for organization
+  let { errors, isValid } = validateOrgRegisterInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
+  //Check validations for User
+  let { userErrors, isUserValid } = validateUserRegisterInput(req.body);
+
+  //Check Validation
+  if (!isUserValid) {
+    return res.status(400).json(userErrors);
+  }
+
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
       return res.status(400).json({ email: "email already exists" });
@@ -57,7 +77,7 @@ router.post("/register", (req, res) => {
 });
 
 // @route   GET api/organization/budget/:id
-// @desc    Add budget to organization
+// @desc    Get budget from organization
 // @access  Private
 router.get(
   "/budget/:id",
@@ -87,13 +107,14 @@ router.post(
   "/budget",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    //const { errors, isValid } = validateExperienceInput(req.body);
+    const { errors, isValid } = validateBudgetInput(req.body);
 
     // Check Validation
-    // if (!isValid) {
-    //   // Return any errors with 400 status
-    //   return res.status(400).json(errors);
-    // }
+    if (!isValid) {
+      // Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
+
     if (req.user.role !== "admin") {
       return res
         .status(400)
