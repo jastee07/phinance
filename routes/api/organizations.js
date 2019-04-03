@@ -252,7 +252,7 @@ router.post(
       const newTransaction = {
         title: req.body.title,
         amount: req.body.amount,
-        revenue: req.body.revenue
+        description: req.body.description
       };
 
       // Add to budgets array
