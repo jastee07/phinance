@@ -58,18 +58,18 @@ router.post("/login", (req, res) => {
   });
 });
 
-// @route   POST api/users/register
-// @desc    Route for admin to register other users
+// @route   GET api/users/register
+// @desc    Testing route name
 // @access  Private
 router.post(
   "/register",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { errors, isValid } = validateUserRegisterInput(req.body);
+    const { userErrors, isUserValid } = validateUserRegisterInput(req.body);
 
     //Check Validation
-    if (!isValid) {
-      return res.status(400).json(errors);
+    if (!isUserValid) {
+      return res.status(400).json(userErrors);
     }
 
     if (req.user.role !== "admin") {
@@ -81,26 +81,31 @@ router.post(
     // Check if email already exists
     User.findOne({ email: req.body.email }).then(user => {
       if (user) {
-        errors.email = "Email already exists";
-        return res.status(400).json(errors);
+        userErrors.email = "Email already exists";
+        return res.status(400).json(userErrors);
       } else {
-        const newUser = new User({
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          password: req.body.password,
-          role: "member",
-          organization: req.user.organization,
-          email: req.body.email
-        });
+        Organization.findById(req.user.organization).then(organization => {
+          const newUser = new User({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            password: req.body.password,
+            role: "member",
+            organization: organization,
+            email: req.body.email
+          });
 
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            newUser.password = hash;
-            newUser
-              .save()
-              .then(user => )
-              .catch(err => console.log(err));
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+              if (err) throw err;
+              newUser.password = hash;
+              newUser
+                .save()
+                .then(user => {
+                  organization.members.push(user);
+                  res.json(organization.members);
+                })
+                .catch(err => console.log(err));
+            });
           });
         });
       }
