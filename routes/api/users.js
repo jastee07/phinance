@@ -3,6 +3,9 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
+const passport = require("passport");
+
+const validateUserRegisterInput = require("../../validation/userRegister");
 
 //Load User Model
 const User = require("../../models/User");
@@ -54,5 +57,55 @@ router.post("/login", (req, res) => {
     });
   });
 });
+
+// @route   POST api/users/register
+// @desc    Route for admin to register other users
+// @access  Private
+router.post(
+  "/register",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateUserRegisterInput(req.body);
+
+    //Check Validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
+    if (req.user.role !== "admin") {
+      return res
+        .status(400)
+        .json({ error: "User needs admin status to do add other users" });
+    }
+
+    // Check if email already exists
+    User.findOne({ email: req.body.email }).then(user => {
+      if (user) {
+        errors.email = "Email already exists";
+        return res.status(400).json(errors);
+      } else {
+        const newUser = new User({
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          password: req.body.password,
+          role: "member",
+          organization: req.user.organization,
+          email: req.body.email
+        });
+
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(user => )
+              .catch(err => console.log(err));
+          });
+        });
+      }
+    });
+  }
+);
 
 module.exports = router;
