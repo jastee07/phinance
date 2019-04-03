@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import Sidebar from "./components/layout/Sidebar";
+import Login from "./components/auth/Login";
 
 import "./App.css";
 
@@ -12,7 +13,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <div className="App">
-          <Sidebar />
+          <Login />
         </div>
       </Provider>
     );
