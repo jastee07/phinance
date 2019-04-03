@@ -4,7 +4,50 @@ import { connect } from "react-redux";
 import TextFieldGroup from "../common/TextFieldGroup";
 
 class Login extends Component {
+  constructor() {
+    super();
+    this.state = {
+      email: "",
+      password: "",
+      errors: {}
+    };
+
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+  /*
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+  */
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+
+    const userData = {
+      email: this.state.email,
+      password: this.state.password
+    };
+    this.props.loginUser(userData);
+  }
   render() {
+    const { errors } = this.state;
+
     return (
       <div className="container">
         <div className="row justify-content-center">
@@ -19,32 +62,22 @@ class Login extends Component {
                         <h1 className="h4 text-gray-900 mb-4">Welcome Back!</h1>
                       </div>
                       <form className="user">
-                        <div className="form-group">
-                          <input
-                            type="email"
-                            className="form-control form-control-user"
-                            id="exampleInputEmail"
-                            aria-describedby="emailHelp"
-                            placeholder="Enter Email Address..."
-                          />
-                        </div>
-                        <div className="form-group">
-                          <input
-                            type="password"
-                            className="form-control form-control-user"
-                            id="exampleInputPassword"
-                            placeholder="Password"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <div className="custom-control custom-checkbox small">
-                            <input
-                              type="checkbox"
-                              className="custom-control-input"
-                              id="customCheck"
-                            />
-                          </div>
-                        </div>
+                        <TextFieldGroup
+                          placeholder="Email Address"
+                          name="email"
+                          type="email"
+                          value={this.state.email}
+                          onChange={this.onChange}
+                          error={errors.email}
+                        />
+                        <TextFieldGroup
+                          placeholder="Password"
+                          name="password"
+                          type="password"
+                          value={this.state.password}
+                          onChange={this.onChange}
+                          error={errors.password}
+                        />
                         <a
                           href="index.html"
                           className="btn btn-primary btn-user btn-block"
