@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import Sidebar from "./components/layout/Sidebar";
+import Register from "./components/auth/Register";
 
 import "./App.css";
 
@@ -11,9 +12,14 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div className="App">
-          <Sidebar />
-        </div>
+        <Sidebar />
+        <Router>
+          <div className="App">
+            <div className="container">
+              <Route exact path="/register" component={Register} />
+            </div>
+          </div>
+        </Router>
       </Provider>
     );
   }
