@@ -6,6 +6,7 @@ const keys = require("../../config/keys");
 const passport = require("passport");
 
 const validateUserRegisterInput = require("../../validation/userRegister");
+const validateLoginInput = require("../../validation/userLogin");
 
 //Load User Model
 const User = require("../../models/User");
@@ -21,10 +22,13 @@ router.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
+  const { errors, isValid } = validateLoginInput(req.body);
+
   User.findOne({ email }).then(user => {
     //check for user
     if (!user) {
-      return res.status(404).json({ login: "Invalid email or password" });
+      errors.email = "User not found";
+      return res.status(404).json(errors);
     }
 
     //Check Password
@@ -52,7 +56,8 @@ router.post("/login", (req, res) => {
         );
       } else {
         //Login Failed
-        return res.status(400).json({ login: "Invalid email or password" });
+        errors.password = "Password incorrect";
+        return res.status(400).json(errors);
       }
     });
   });
