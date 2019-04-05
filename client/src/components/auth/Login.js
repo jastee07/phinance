@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+import propTypes from "prop-types";
+import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import TextFieldGroup from "../common/TextFieldGroup";
 import { loginUser } from "../../actions/authActions";
@@ -44,6 +45,7 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password
     };
+
     this.props.loginUser(userData);
   }
   render() {
@@ -79,12 +81,10 @@ class Login extends Component {
                           onChange={this.onChange}
                           error={errors.password}
                         />
-                        <button
+                        <input
                           type="submit"
                           className="btn btn-primary btn-user btn-block"
-                        >
-                          Login
-                        </button>
+                        />
                       </form>
                       <hr />
                       <div className="text-center">
@@ -109,6 +109,12 @@ class Login extends Component {
   }
 }
 
+Login.propTypes = {
+  loginUser: propTypes.func.isRequired,
+  auth: propTypes.object.isRequired,
+  errors: propTypes.object.isRequired
+};
+
 const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors
@@ -117,4 +123,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { loginUser }
-)(Login);
+)(withRouter(Login));
