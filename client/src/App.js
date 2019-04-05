@@ -5,6 +5,7 @@ import store from "./store";
 
 import Sidebar from "./components/layout/Sidebar";
 import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
 
 import "./App.css";
 
@@ -20,6 +21,9 @@ class App extends Component {
             </div>
           </div>
         </Router>
+        <div className="App">
+          <Login />
+        </div>
       </Provider>
     );
   }
