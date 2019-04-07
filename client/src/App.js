@@ -27,7 +27,11 @@ class App extends Component {
               <div className="col-9">
                 <div className="container">
                   <Route exact path="/login" component={Login} />
-                  <Route exact path="/register" component={RegisterOrg} />
+                  <Route
+                    exact
+                    path="/organizations/register"
+                    component={RegisterOrg}
+                  />
                   <Switch>
                     <PrivateRoute
                       exact

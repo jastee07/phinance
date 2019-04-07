@@ -69,7 +69,7 @@ class RegisterOrg extends Component {
                     Organization Registration
                   </h1>
                 </div>
-                <form className="user">
+                <form noValidate onSubmit={this.onSubmit} className="user">
                   <div className="form-group row">
                     <div className="col-sm-12">
                       <TextFieldGroup
