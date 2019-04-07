@@ -62,7 +62,9 @@ class Login extends Component {
                   <div className="col-lg-6">
                     <div className="p-5">
                       <div className="text-center">
-                        <h1 className="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                        <h1 className="h4 text-gray-900 mb-4">
+                          Administrator Login
+                        </h1>
                       </div>
                       <form className="user" onSubmit={this.onSubmit}>
                         <TextFieldGroup
@@ -86,17 +88,6 @@ class Login extends Component {
                           className="btn btn-primary btn-user btn-block"
                         />
                       </form>
-                      <hr />
-                      <div className="text-center">
-                        <a className="small" href="forgot-password.html">
-                          Forgot Password?
-                        </a>
-                      </div>
-                      <div className="text-center">
-                        <a className="small" href="register.html">
-                          Create an Account!
-                        </a>
-                      </div>
                     </div>
                   </div>
                 </div>
