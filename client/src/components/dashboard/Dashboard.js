@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentUser } from "../../actions/userActions";
 
-import SimpleCard from "../dashboard/SimpleCard";
+import ExpensesCard from "../dashboard/ExpensesCard";
 import AreaChart from "./Charts/AreaChart";
 import BarChart from "./Charts/BarChart";
 
