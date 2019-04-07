@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import Sidebar from "./components/layout/Sidebar";
-import Register from "./components/auth/Register";
+import RegisterUser from "./components/auth/RegisterUser";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 
@@ -12,6 +12,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import PrivateRoute from "./components/common/PrivateRoute";
 
 import "./App.css";
+import RegisterOrg from "./components/auth/RegisterOrg";
 
 class App extends Component {
   render() {
@@ -26,12 +27,23 @@ class App extends Component {
               <div className="col-9">
                 <div className="container">
                   <Route exact path="/login" component={Login} />
-                  <Route exact path="/register" component={Register} />
+                  <Route
+                    exact
+                    path="/organizations/register"
+                    component={RegisterOrg}
+                  />
                   <Switch>
                     <PrivateRoute
                       exact
                       path="/dashboard"
                       component={Dashboard}
+                    />
+                  </Switch>
+                  <Switch>
+                    <PrivateRoute
+                      exact
+                      path="/users/register"
+                      component={RegisterUser}
                     />
                   </Switch>
                 </div>
