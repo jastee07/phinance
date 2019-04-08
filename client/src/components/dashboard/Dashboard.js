@@ -23,6 +23,11 @@ class Dashboard extends Component {
             <h1>Hello, {user.firstName}!</h1>
           </div>
         </div>
+        <div className="row">
+          <div className="col-12">
+            <ExpensesCard />
+          </div>
+        </div>
       </div>
     );
   }
@@ -31,11 +36,9 @@ class Dashboard extends Component {
 Dashboard.propTypes = {
   getCurrentUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile,
   auth: state.auth
 });
 

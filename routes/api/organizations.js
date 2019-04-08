@@ -76,6 +76,18 @@ router.post("/register", (req, res) => {
   });
 });
 
+// @route   GET api/organizations/:id
+// @desc    Get Organization by id
+// @access  Public
+
+router.get("/:id", (req, res) => {
+  Organization.findById(req.params.id)
+    .then(organization => res.json(organization))
+    .catch(err =>
+      res.status(404).json({ noorgfound: "No organization found with that ID" })
+    );
+});
+
 // @route   GET api/organization/budget/:id
 // @desc    Get budget from organization
 // @access  Private
