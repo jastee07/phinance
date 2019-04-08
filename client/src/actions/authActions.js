@@ -75,7 +75,6 @@ export const setCurrentLoading = () => {
 };
 
 //Log out user
-
 export const logoutUser = () => dispatch => {
   //Remove token from localStorage
   localStorage.removeItem("jwtToken");

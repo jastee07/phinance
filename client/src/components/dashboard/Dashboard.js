@@ -16,7 +16,11 @@ class Dashboard extends Component {
   }
 
   totalUpArray(arr) {
-    return arr.reduce((a, b) => ({ amount: a.amount + b.amount }));
+    if (arr.length === 0) {
+      return { amount: 0 };
+    } else {
+      return arr.reduce((a, b) => ({ amount: a.amount + b.amount }));
+    }
   }
 
   componentDidMount() {
