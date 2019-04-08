@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 
@@ -75,6 +76,27 @@ router.post("/register", (req, res) => {
     }
   });
 });
+
+// @route   GET api/organizations/:id
+// @desc    Get Current user's Organization
+// @access  Public
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+
+    Organization.findOne({ _id: req.user.organization })
+      .then(org => {
+        if (!org) {
+          errors.noorg = "There is no organization for this user";
+          return res.status(404).json(errors);
+        }
+        res.json(org);
+      })
+      .catch(err => res.status(404).json(err));
+  }
+);
 
 // @route   GET api/organization/budget/:id
 // @desc    Get budget from organization
