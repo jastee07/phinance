@@ -2,41 +2,34 @@ import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 
-const ExpensesCard = ({
-  name,
-  value
-}) => {
+const ExpensesCard = ({ title, value }) => {
   return (
-    <div className="form-group">
-      <input
-        type={type}
-        className={classnames("form-control form-control-lg", {
-          "is-invalid": error
-        })}
-        placeholder={placeholder}
-        name={name}
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
-      />
-      {info && <small className="form-text text-muted">{info}</small>}
-      {error && <div className="invalid-feedback">{error}</div>}
+    <div className="col-xl-3 col-md-6 mb-4">
+      <div className="card border-left-primary shadow h-100 py-2">
+        <div className="card-body">
+          <div className="row no-gutters align-items-center">
+            <div className="col mr-2">
+              <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                {title}
+              </div>
+              <div className="h5 mb-0 font-weight-bold text-gray-800">
+                {value}
+              </div>
+            </div>
+            <div className="col-auto">
+              <i className="fas fa-calendar fa-2x text-gray-300" />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-TextFieldGroup.protoTypes = {
+ExpensesCard.protoTypes = {
   name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string,
   value: PropTypes.string.isRequired,
-  error: PropTypes.string,
-  type: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  disabled: PropTypes.string
+  title: PropTypes.string.isRequired
 };
 
-TextFieldGroup.defaultProps = {
-  type: "text"
-};
-
-export default TextFieldGroup;
+export default ExpensesCard;
