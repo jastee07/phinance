@@ -1,43 +1,66 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentUser } from "../../actions/userActions";
 import { getCurrentOrg } from "../../actions/orgActions";
+import Spinner from "../common/Spinner";
 
-import ExpensesCard from "../dashboard/ExpensesCard";
-import AreaChart from "./Charts/AreaChart";
-import BarChart from "./Charts/BarChart";
+import MonetaryCard from "./MonetaryCard";
 
 class Dashboard extends Component {
+  constructor() {
+    super();
+
+    this.totalUpArray = this.totalUpArray.bind(this);
+  }
+
+  totalUpArray(arr) {
+    return arr.reduce((a, b) => ({ amount: a.amount + b.amount }));
+  }
+
   componentDidMount() {
-    this.props.getCurrentUser();
-
-    const { user } = this.props.auth;
-
-    //Using user, get organizaton
-    this.props.getCurrentOrg(user.organiztion);
-
-    const { budgets } = this.props.org;
+    this.props.getCurrentOrg();
   }
 
   render() {
-    const { user } = this.props.auth;
+    const { user, loading } = this.props.auth;
+    const { organization } = this.props.org;
 
-    return (
-      <div>
-        <div className="row">
-          <div className="col-12">
-            <h1>Hello, {user.firstName}!</h1>
+    let dashboardContent;
+
+    if (organization === null || loading) {
+      dashboardContent = <Spinner />;
+    } else {
+      const budgetArray = organization.budgets;
+
+      //Filter all NON-revenue items into an array
+      const nonRevenueArr = budgetArray.filter(item => {
+        if (!item.revenue) return item;
+      });
+
+      //Filter all revenue items into an array
+      const revenueArr = budgetArray.filter(item => {
+        if (item.revenue) return item;
+      });
+
+      const totalExpObj = this.totalUpArray(nonRevenueArr);
+      const totalRevObj = this.totalUpArray(revenueArr);
+
+      dashboardContent = (
+        <div>
+          <div className="row">
+            <div className="col-12">
+              <h1>Hello {user.firstName}!</h1>
+            </div>
+          </div>
+          <div className="row">
+            <MonetaryCard title="Expenses" value={totalExpObj.amount} />
+            <MonetaryCard title="Revenue" value={totalRevObj.amount} />
           </div>
         </div>
-        <div className="row">
-          <div className="col-12">
-            <ExpensesCard title="Expenses" value="40,000" />
-          </div>
-        </div>
-      </div>
-    );
+      );
+    }
+    return <div>{dashboardContent}</div>;
   }
 }
 

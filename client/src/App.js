@@ -32,6 +32,7 @@ class App extends Component {
                     path="/organizations/register"
                     component={RegisterOrg}
                   />
+                  <Route exact path="/organizations/:id" />
                   <Switch>
                     <PrivateRoute
                       exact
