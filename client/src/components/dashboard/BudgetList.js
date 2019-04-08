@@ -1,12 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { setCurrentBudget } from "./../../actions/budgetActions";
 
 class BudgetList extends Component {
+  onBudgetClick(id) {
+    this.props.setCurrentBudget(id);
+  }
+
   render() {
     const budget = this.props.budget.map(bud => (
-      <tr>
-        <td>{bud.title}</td>
+      <tr key={bud._id}>
+        <td>
+          <Link
+            to="/organizations/budget"
+            onClick={this.onBudgetClick.bind(this, bud._id)}
+          >
+            {bud.title}
+          </Link>
+        </td>
         <td>{bud.amount}</td>
         <td>{bud.revenue}</td>
       </tr>
@@ -31,4 +44,11 @@ class BudgetList extends Component {
   }
 }
 
-export default connect(null)(BudgetList);
+BudgetList.propTypes = {
+  setCurrentBudget: PropTypes.func.isRequired
+};
+
+export default connect(
+  null,
+  { setCurrentBudget }
+)(BudgetList);

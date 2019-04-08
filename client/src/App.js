@@ -10,6 +10,7 @@ import Sidebar from "./components/layout/Sidebar";
 import RegisterUser from "./components/auth/RegisterUser";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
+import BudgetDashboard from "./components/budget/BudgetDashboard";
 
 //Private Route
 import PrivateRoute from "./components/common/PrivateRoute";
@@ -70,6 +71,13 @@ class App extends Component {
                       exact
                       path="/users/register"
                       component={RegisterUser}
+                    />
+                  </Switch>
+                  <Switch>
+                    <PrivateRoute
+                      exact
+                      path="/organizations/budget"
+                      component={BudgetDashboard}
                     />
                   </Switch>
                 </div>
