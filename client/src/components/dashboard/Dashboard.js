@@ -6,6 +6,7 @@ import { getCurrentOrg } from "../../actions/orgActions";
 import Spinner from "../common/Spinner";
 
 import MonetaryCard from "./MonetaryCard";
+import BudgetList from "./BudgetList";
 
 class Dashboard extends Component {
   constructor() {
@@ -56,6 +57,11 @@ class Dashboard extends Component {
           <div className="row">
             <MonetaryCard title="Expenses" value={totalExpObj.amount} />
             <MonetaryCard title="Revenue" value={totalRevObj.amount} />
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <BudgetList budget={budgetArray} />
+            </div>
           </div>
         </div>
       );
