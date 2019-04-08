@@ -33,10 +33,10 @@ class Sidebar extends Component {
         <hr className="sidebar-divider my-0" />
 
         <li className="nav-item active">
-          <a className="nav-link" href="dashboard">
+          <Link className="nav-link" to="/dashboard">
             <i className="fas fa-fw fa-tachometer-alt" />
             <span>Dashboard</span>
-          </a>
+          </Link>
         </li>
 
         <hr className="sidebar-divider" />
@@ -51,10 +51,10 @@ class Sidebar extends Component {
         </li>
 
         <li className="nav-item">
-          <a className="nav-link" href="#">
-            <i className="fas fa-fw fa-sign-out-alt" />
+          <Link className="nav-link" to="users/register">
+            <i className="fas fa-fw fa-user-friends" />
             <span> Add User</span>
-          </a>
+          </Link>
         </li>
 
         <li className="nav-item">
@@ -63,7 +63,7 @@ class Sidebar extends Component {
             href="_blank"
             onClick={this.onLogoutClick.bind(this)}
           >
-            <i className="fas fa-fw fa-user-friends" />
+            <i className="fas fa-fw fa-sign-out-alt" />
             <span> Logout</span>
           </a>
         </li>
