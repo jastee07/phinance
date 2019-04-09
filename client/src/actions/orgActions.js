@@ -6,7 +6,7 @@ import {
   ORGANIZATION_LOADING
 } from "./types";
 
-// Get current profile
+// Get current organization
 export const getCurrentOrg = () => dispatch => {
   dispatch(setOrganizationLoading());
   axios
