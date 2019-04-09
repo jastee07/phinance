@@ -29,18 +29,18 @@ class BudgetDashboard extends Component {
     if (budget === null || loading) {
       dashboardContent = <Spinner />;
     } else {
-      const { transactions } = this.props.budget;
+      const budTransactions = budget.transactions;
 
       dashboardContent = (
         <div>
           <div className="row">
             <div className="col-12">
-              <h1>Hello {budget.title}</h1>
+              <h1>{budget.title} Budget Dashboard</h1>
             </div>
           </div>
           <div className="row">
             <div className="col-12">
-              <TransactionList />
+              <TransactionList transactions={budTransactions} />
             </div>
           </div>
         </div>
