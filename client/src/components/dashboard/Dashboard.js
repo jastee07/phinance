@@ -44,25 +44,15 @@ class Dashboard extends Component {
     //May need to construct dataset object here and then add to chartData
     let budgetDataSet = {
       data: [],
-      backgroundColor: [
-        '#FF6384',
-        '#36A2EB',
-        '#FFCE56'
-      ],
-      hoverBackgroundColor: [
-        '#FF6384',
-        '#36A2EB',
-        '#FFCE56'
-      ]
-    }
+      backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+      hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
+    };
 
     //Get amounts of each budget
     let budgetAmounts = budgetArray.map(a => a.amount);
     budgetDataSet.data = budgetAmounts;
     data.datasets.push(budgetDataSet);
-
   }
-
 
   render() {
     const { user, loading } = this.props.auth;
@@ -93,26 +83,24 @@ class Dashboard extends Component {
 
       dashboardContent = (
         <div>
-          <div className="row" >
+          <div className="row">
             <div className="col-12">
               <h1>Hello {user.firstName}!</h1>
             </div>
-          </div >
+          </div>
           <div className="row">
             <MonetaryCard title="Expenses" value={totalExpObj.amount} />
             <MonetaryCard title="Revenue" value={totalRevObj.amount} />
           </div>
           <div className="row">
-            <div className="col-12">
+            <div className="col-6">
               <BudgetList budget={budgetArray} />
             </div>
-          </div>
-          <div className="row">
-            <div className="col-12">
+            <div className="col-6">
               <DoughnutChart data={data} />
             </div>
           </div>
-        </div >
+        </div>
       );
     }
     return <div>{dashboardContent}</div>;
