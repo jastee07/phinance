@@ -11,6 +11,7 @@ import RegisterUser from "./components/auth/RegisterUser";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import BudgetDashboard from "./components/budget/BudgetDashboard";
+import CreateTransaction from "./components/budget/CreateTransaction";
 
 //Private Route
 import PrivateRoute from "./components/common/PrivateRoute";
@@ -78,6 +79,13 @@ class App extends Component {
                       exact
                       path="/organizations/budget"
                       component={BudgetDashboard}
+                    />
+                  </Switch>
+                  <Switch>
+                    <PrivateRoute
+                      exact
+                      path="/organizations/budget/transactions"
+                      component={CreateTransaction}
                     />
                   </Switch>
                 </div>
