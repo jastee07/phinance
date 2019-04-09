@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import propTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { registerUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 
 class RegisterUser extends Component {

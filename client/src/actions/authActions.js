@@ -1,9 +1,14 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
+import { getCurrentOrg } from "./orgActions";
 
-import { GET_ERRORS, SET_CURRENT_USER } from "./types";
-
+import {
+  GET_ERRORS,
+  SET_CURRENT_USER,
+  SET_CURRENT_ORGANIZATION,
+  CURRENT_LOADING
+} from "./types";
 // Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
@@ -62,8 +67,14 @@ export const setCurrentUser = decoded => {
   };
 };
 
-//Log out user
+// Current data loading
+export const setCurrentLoading = () => {
+  return {
+    type: CURRENT_LOADING
+  };
+};
 
+//Log out user
 export const logoutUser = () => dispatch => {
   //Remove token from localStorage
   localStorage.removeItem("jwtToken");
