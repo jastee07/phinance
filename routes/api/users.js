@@ -64,7 +64,7 @@ router.post("/login", (req, res) => {
 });
 
 // @route   GET api/users/register
-// @desc    Testing route name
+// @desc    Registers a user with member role, admin must do this
 // @access  Private
 router.post(
   "/register",
@@ -107,7 +107,7 @@ router.post(
                 .save()
                 .then(user => {
                   organization.members.push(user);
-                  res.json(organization.members);
+                  res.json(organization);
                 })
                 .catch(err => console.log(err));
             });

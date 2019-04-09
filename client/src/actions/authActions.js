@@ -9,10 +9,11 @@ import {
   SET_CURRENT_ORGANIZATION,
   CURRENT_LOADING
 } from "./types";
-// Register User
-export const registerUser = (userData, history) => dispatch => {
+
+// Register admin and organization
+export const registerOrganization = (userData, history) => dispatch => {
   axios
-    .post("/api/users/register", userData)
+    .post("/api/organizations/register", userData)
     .then(res => history.push("/login"))
     .catch(err =>
       dispatch({
@@ -22,11 +23,11 @@ export const registerUser = (userData, history) => dispatch => {
     );
 };
 
-// Register User
-export const registerOrganization = (userData, history) => dispatch => {
+// Used by ADMIN to register users
+export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("/api/organizations/register", userData)
-    .then(res => history.push("/login"))
+    .post("/api/users/register", userData)
+    .then(res => history.push("/dashboard"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
