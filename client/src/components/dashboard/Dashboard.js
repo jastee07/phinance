@@ -7,12 +7,20 @@ import Spinner from "../common/Spinner";
 
 import MonetaryCard from "./MonetaryCard";
 import BudgetList from "./BudgetList";
+import DoughnutChart from "./Charts/DoughnutChart.js";
+
+//Object to represent Chart Data
+var data = {
+  labels: [],
+  datasets: []
+};
 
 class Dashboard extends Component {
   constructor() {
     super();
 
     this.totalUpArray = this.totalUpArray.bind(this);
+    this.accumulateChartData = this.accumulateChartData.bind(this);
   }
 
   totalUpArray(arr) {
@@ -27,6 +35,25 @@ class Dashboard extends Component {
     this.props.getCurrentOrg();
   }
 
+  //Takes in array of budget objects and extracts data for the doughnut chart
+  accumulateChartData(budgetArray) {
+    //Get titles of budgets
+    let budgetTitles = budgetArray.map(a => a.title);
+    data.labels = budgetTitles;
+
+    //May need to construct dataset object here and then add to chartData
+    let budgetDataSet = {
+      data: [],
+      backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+      hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
+    };
+
+    //Get amounts of each budget
+    let budgetAmounts = budgetArray.map(a => a.amount);
+    budgetDataSet.data = budgetAmounts;
+    data.datasets.push(budgetDataSet);
+  }
+
   render() {
     const { user, loading } = this.props.auth;
     const { organization } = this.props.org;
@@ -37,6 +64,9 @@ class Dashboard extends Component {
       dashboardContent = <Spinner />;
     } else {
       const budgetArray = organization.budgets;
+
+      //Establish Chart Data
+      this.accumulateChartData(budgetArray);
 
       //Filter all NON-revenue items into an array
       const nonRevenueArr = budgetArray.filter(item => {
@@ -63,8 +93,11 @@ class Dashboard extends Component {
             <MonetaryCard title="Revenue" value={totalRevObj.amount} />
           </div>
           <div className="row">
-            <div className="col-12">
+            <div className="col-6">
               <BudgetList budget={budgetArray} />
+            </div>
+            <div className="col-6">
+              <DoughnutChart data={data} />
             </div>
           </div>
         </div>
