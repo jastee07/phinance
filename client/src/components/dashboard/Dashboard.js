@@ -47,7 +47,7 @@ class Dashboard extends Component {
 
     //May need to construct dataset object here and then add to chartData
     let budgetDataSet = {
-      label: parseInt(Math.random() * 100, 10),
+      label: "budgetchart",
       data: [],
       backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#AD0000"],
       hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#AD0000"]

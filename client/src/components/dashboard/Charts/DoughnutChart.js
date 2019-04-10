@@ -10,7 +10,7 @@ class DoughnutChart extends Component {
           <h4 className="font-weight-bold text-primary">Budget Breakdown</h4>
         </div>
         <div className="card-body">
-          <Doughnut data={this.props.data} />
+          <Doughnut data={this.props.data} redraw="true" />
         </div>
       </div>
     );

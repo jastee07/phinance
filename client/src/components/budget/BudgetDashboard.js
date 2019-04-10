@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getCurrentUser } from "../../actions/userActions";
 import { getCurrentOrg } from "../../actions/orgActions";
+import { setCurrentBudget } from "../../actions/budgetActions";
 import Spinner from "../common/Spinner";
 import TransactionList from "./TransactionList";
 
@@ -13,6 +13,11 @@ class BudgetDashboard extends Component {
 
     this.totalUpArray = this.totalUpArray.bind(this);
     this.onAddTransClick = this.onAddTransClick.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getCurrentOrg();
+    this.props.setCurrentBudget();
   }
 
   totalUpArray(arr) {
@@ -78,6 +83,8 @@ class BudgetDashboard extends Component {
 }
 
 BudgetDashboard.propTypes = {
+  getCurrentOrg: PropTypes.object.isRequired,
+  setCurrentBudget: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   org: PropTypes.object.isRequired,
   budget: PropTypes.object.isRequired
@@ -89,4 +96,7 @@ const mapStateToProps = state => ({
   budget: state.budget
 });
 
-export default connect(mapStateToProps)(withRouter(BudgetDashboard));
+export default connect(
+  mapStateToProps,
+  { getCurrentOrg, setCurrentBudget }
+)(withRouter(BudgetDashboard));
