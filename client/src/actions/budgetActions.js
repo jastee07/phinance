@@ -3,7 +3,8 @@ import axios from "axios";
 import {
   SET_CURRENT_BUDGET,
   BUDGET_LOADING,
-  CLEAR_CURRENT_BUDGET
+  CLEAR_CURRENT_BUDGET,
+  GET_ERRORS
 } from "./types";
 
 // Get current organization
@@ -18,6 +19,19 @@ export const setCurrentBudget = id => dispatch => {
       })
     )
     .catch(err => console.log(err));
+};
+
+// Add Transaction to budget
+export const addTransaction = (transData, bud_id, history) => dispatch => {
+  axios
+    .post(`/budget/${bud_id}/transactions`, transData)
+    .then(res => history.push("/dashboard"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
 };
 
 // Profile loading

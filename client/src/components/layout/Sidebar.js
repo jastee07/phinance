@@ -17,7 +17,7 @@ class Sidebar extends Component {
     //Only Show Sign In if not authenticated
     const authLinks = (
       <ul
-        className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+        className="navbar-nav bg-gradient-primary sidebar sidebar-dark"
         id="accordionSidebar"
       >
         <a
