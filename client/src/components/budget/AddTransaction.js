@@ -1,15 +1,13 @@
 import React, { Component } from "react";
-import propTypes from "prop-types";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import { registerUser } from "../../actions/authActions";
-import { addTransaction } from "../../actions/budgetActions";
+import { Link, withRouter } from "react-router-dom";
 import TextFieldGroup from "../common/TextFieldGroup";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { addTransaction } from "../../actions/budgetActions";
 
-class CreateTransaction extends Component {
-  constructor() {
-    super();
-
+class AddTransaction extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
       title: "",
       amount: "",
@@ -22,44 +20,31 @@ class CreateTransaction extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  componentDidMount() {
-    //If they are just a user then not allowed
-    //eventually we should just not show this option at all
-    if (
-      this.props.auth.isAuthenticated &&
-      this.props.auth.user.role !== "admin"
-    ) {
-      this.props.history.push("/dashboard");
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
   }
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
   onSubmit(e) {
     e.preventDefault();
 
-    const newTrans = {
+    const transData = {
       title: this.state.title,
       amount: this.state.amount,
       date: this.state.date,
       description: this.state.description
     };
 
-    console.log(this.props.budget.budget._id);
+    const { budget } = this.props.budget;
 
-    /*this.props.addTransaction(
-      newTrans,
-      this.props.budget._id,
-      this.props.history
-    );*/
+    console.log(budget);
+
+    this.props.addTransaction(transData, budget._id, this.props.history);
+  }
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
@@ -142,11 +127,11 @@ class CreateTransaction extends Component {
   }
 }
 
-CreateTransaction.propTypes = {
-  addTransaction: propTypes.func.isRequired,
-  auth: propTypes.object.isRequired,
-  budget: propTypes.object.isRequired,
-  errors: propTypes.object.isRequired
+AddTransaction.propTypes = {
+  addTransaction: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  budget: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -158,4 +143,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { addTransaction }
-)(withRouter(CreateTransaction));
+)(withRouter(AddTransaction));

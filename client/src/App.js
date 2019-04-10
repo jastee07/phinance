@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser } from "./actions/authActions";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -11,7 +11,7 @@ import RegisterUser from "./components/auth/RegisterUser";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import BudgetDashboard from "./components/budget/BudgetDashboard";
-import CreateTransaction from "./components/budget/CreateTransaction";
+import AddTransaction from "./components/budget/AddTransaction";
 
 //Private Route
 import PrivateRoute from "./components/common/PrivateRoute";
@@ -30,15 +30,13 @@ if (localStorage.jwtToken) {
 
   //Check for expired token
   const currentTime = Date.now() / 1000;
-  /*if (decoded.exp < currentTime) {
+  if (decoded.exp < currentTime) {
     //Logout user
     store.dispatch(logoutUser());
 
-    //CLear current profile
-    store.dispatch(clearCurrentProfile());
     //Redirect to login
-    window.location.href = "/login";
-  }*/
+    window.location.href = "/";
+  }
 }
 
 class App extends Component {
@@ -54,6 +52,7 @@ class App extends Component {
               <div className="col-9">
                 <div className="container">
                   <Route exact path="/" component={Login} />
+                  <Route exact path="/login" component={Login} />
                   <Route
                     exact
                     path="/organizations/register"
@@ -85,7 +84,7 @@ class App extends Component {
                     <PrivateRoute
                       exact
                       path="/organizations/budget/transactions"
-                      component={CreateTransaction}
+                      component={AddTransaction}
                     />
                   </Switch>
                 </div>

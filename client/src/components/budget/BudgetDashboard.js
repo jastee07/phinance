@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { getCurrentUser } from "../../actions/userActions";
 import { getCurrentOrg } from "../../actions/orgActions";
 import Spinner from "../common/Spinner";
@@ -23,7 +24,7 @@ class BudgetDashboard extends Component {
   }
 
   onAddTransClick(bud_id) {
-    window.location.href = `/organizations/budget/transactions`;
+    this.props.history.push("/organizations/budget/transactions");
 
     console.log("Add Transaction Clicked");
   }
@@ -92,4 +93,4 @@ const mapStateToProps = state => ({
   budget: state.budget
 });
 
-export default connect(mapStateToProps)(BudgetDashboard);
+export default connect(mapStateToProps)(withRouter(BudgetDashboard));
