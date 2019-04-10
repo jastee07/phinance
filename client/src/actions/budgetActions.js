@@ -24,8 +24,8 @@ export const setCurrentBudget = id => dispatch => {
 // Add Transaction to budget
 export const addTransaction = (transData, bud_id, history) => dispatch => {
   axios
-    .post(`/budget/${bud_id}/transactions`, transData)
-    .then(res => history.push("/dashboard"))
+    .post(`/api/organizations/budget/${bud_id}/transactions`, transData)
+    .then(res => history.push("/organizations/budget"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
