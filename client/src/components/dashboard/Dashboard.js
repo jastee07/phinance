@@ -16,8 +16,8 @@ var data = {
 };
 
 class Dashboard extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.totalUpArray = this.totalUpArray.bind(this);
     this.accumulateChartData = this.accumulateChartData.bind(this);
@@ -37,6 +37,10 @@ class Dashboard extends Component {
 
   //Takes in array of budget objects and extracts data for the doughnut chart
   accumulateChartData(budgetArray) {
+    //Reset Graph data
+    //data.labels = [];
+    //data.datasets = [];
+
     //Get titles of budgets
     let budgetTitles = budgetArray.map(a => a.title);
     data.labels = budgetTitles;
@@ -45,8 +49,8 @@ class Dashboard extends Component {
     let budgetDataSet = {
       label: "budgetchart",
       data: [],
-      backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-      hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
+      backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#AD0000"],
+      hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#AD0000"]
     };
 
     //Get amounts of each budget
