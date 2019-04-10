@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getCurrentOrg } from "../../actions/orgActions";
-import { setCurrentBudget } from "../../actions/budgetActions";
 import Spinner from "../common/Spinner";
 import TransactionList from "./TransactionList";
 
@@ -17,7 +16,6 @@ class BudgetDashboard extends Component {
 
   componentDidMount() {
     this.props.getCurrentOrg();
-    this.props.setCurrentBudget();
   }
 
   totalUpArray(arr) {
@@ -98,5 +96,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentOrg, setCurrentBudget }
+  { getCurrentOrg }
 )(withRouter(BudgetDashboard));
