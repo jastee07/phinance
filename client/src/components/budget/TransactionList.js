@@ -2,10 +2,23 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { setCurrentBudget } from "./../../actions/budgetActions";
+import {
+  setCurrentBudget,
+  deleteTransaction
+} from "./../../actions/budgetActions";
 import BudgetDashboard from "./BudgetDashboard";
 
 class TransactionList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onDeleteTranClick = this.onDeleteTranClick.bind(this);
+  }
+
+  onDeleteTranClick(tran_id, bud_id) {
+    this.props.deleteTransaction();
+  }
+
   render() {
     const { budget } = this.props.budget;
 
@@ -13,6 +26,14 @@ class TransactionList extends Component {
       <tr key={tran._id}>
         <td>{tran.title}</td>
         <td>{tran.amount}</td>
+        <td>
+          <button className="btn btn-primary">Edit</button>
+        </td>
+        <td>
+          <button className="btn btn-danger" onClick={this.onDeleteTranClick}>
+            Delete
+          </button>
+        </td>
       </tr>
     ));
 
@@ -35,6 +56,7 @@ class TransactionList extends Component {
 }
 
 TransactionList.propTypes = {
+  deleteTransaction: PropTypes.func.isRequired,
   budget: PropTypes.object.isRequired
 };
 
@@ -42,4 +64,7 @@ const mapStateToProps = state => ({
   budget: state.auth
 });
 
-export default connect(mapStateToProps)(TransactionList);
+export default connect(
+  mapStateToProps,
+  { deleteTransaction }
+)(TransactionList);
