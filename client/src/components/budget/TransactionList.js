@@ -25,7 +25,6 @@ class TransactionList extends Component {
               <th />
               <th>Title</th>
               <th>Amount</th>
-              <th />
             </tr>
             {transList}
           </thead>
