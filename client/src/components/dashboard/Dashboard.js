@@ -84,17 +84,33 @@ class Dashboard extends Component {
       dashboardContent = (
         <div>
           <div className="row">
-            <div className="col-12">
-              <h1>Hello {user.firstName}!</h1>
-            </div>
-          </div>
-          <div className="row">
-            <MonetaryCard title="Expenses" value={totalExpObj.amount} />
-            <MonetaryCard title="Revenue" value={totalRevObj.amount} />
-          </div>
-          <div className="row">
-            <div className="col-6">
-              <BudgetList budget={budgetArray} />
+            <div className="col-4">
+              <div className="row">
+                <div className="col-12">
+                  <h1>Hello {user.firstName}!</h1>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-5">
+                  <MonetaryCard
+                    title="Expenses"
+                    value={totalExpObj.amount}
+                    icon="fas fa-dollar-sign fa-2x text-gray-300"
+                  />
+                </div>
+                <div className="col-5">
+                  <MonetaryCard
+                    title="Revenue"
+                    value={totalRevObj.amount}
+                    icon="fas fa-dollar-sign fa-2x text-gray-300"
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-10">
+                  <BudgetList budget={budgetArray} />
+                </div>
+              </div>
             </div>
             <div className="col-6">
               <DoughnutChart data={data} />
