@@ -29,7 +29,9 @@ class TransactionList extends Component {
         <td>{tran.title}</td>
         <td>{tran.amount}</td>
         <td>
-          <button className="btn btn-primary">Edit</button>
+          <Link to="edit-transaction" className="btn btn-primary">
+            Edit
+          </Link>
         </td>
         <td>
           <button
@@ -48,9 +50,10 @@ class TransactionList extends Component {
         <table className="table">
           <thead>
             <tr>
-              <th />
               <th>Title</th>
               <th>Amount</th>
+              <th />
+              <th />
             </tr>
             {transList}
           </thead>
