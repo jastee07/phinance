@@ -3,13 +3,13 @@ import { Link, withRouter } from "react-router-dom";
 import TextFieldGroup from "../common/TextFieldGroup";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { addTransaction } from "../../actions/budgetActions";
+import isEmpty from "../../validation/is-empty";
 
 import { getCurrentOrg } from "../../actions/orgActions";
-import { setCurrentBudget } from "../../actions/budgetActions";
+import { addTransaction, editTransaction, setCurrentBudget } from "../../actions/budgetActions";
 
 
-class AddTransaction extends Component {
+class EditTransaction extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,6 +38,23 @@ class AddTransaction extends Component {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
+
+    //Retrieve transaction information from local storage
+    const tran_id = localStorage.getItem("tran_id");
+    const tran_title = localStorage.getItem("tran_title");
+    const tran_amount = localStorage.getItem("tran_amount");
+    const tran_description = localStorage.getItem("tran_description");
+    const tran_date = localStorage.getItem("tran_date");
+
+
+    //Set EditTransaction component state equal to local storage date
+    this.setState({
+      id: !isEmpty(tran_id) ? tran_id : "",
+      title: !isEmpty(tran_title) ? tran_title : "",
+      amount: !isEmpty(tran_amount) ? tran_amount : "",
+      description: !isEmpty(tran_description) ? tran_description : "",
+      date: !isEmpty(tran_date) ? tran_date : ""
+    })
   }
 
   onSubmit(e) {
@@ -54,7 +71,7 @@ class AddTransaction extends Component {
 
     console.log(budget);
 
-    this.props.addTransaction(transData, budget._id, this.props.history);
+    this.props.editTransaction(this.state.id, budget._id, transData, this.props.history);
   }
 
   onChange(e) {
@@ -74,7 +91,7 @@ class AddTransaction extends Component {
                   <div className="p-5">
                     <div className="text-center">
                       <h1 className="h4 text-gray-900 mb-4">
-                        Add a Transaction
+                        Edit Transaction
                       </h1>
                     </div>
                     <form className="user" noValidate onSubmit={this.onSubmit}>
@@ -141,8 +158,9 @@ class AddTransaction extends Component {
   }
 }
 
-AddTransaction.propTypes = {
+EditTransaction.propTypes = {
   addTransaction: PropTypes.func.isRequired,
+  editTransaction: PropTypes.func.isRequired,
   getCurrentOrg: PropTypes.func.isRequired,
   setCurrentBudget: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
@@ -158,5 +176,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addTransaction, getCurrentOrg, setCurrentBudget }
-)(withRouter(AddTransaction));
+  { addTransaction, editTransaction, getCurrentOrg, setCurrentBudget }
+)(withRouter(EditTransaction));

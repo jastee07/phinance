@@ -13,6 +13,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import BudgetDashboard from "./components/budget/BudgetDashboard";
 import AddBudget from "./components/budget/AddBudget";
 import AddTransaction from "./components/budget/AddTransaction";
+import EditTransaction from "./components/budget/EditTransaction";
 
 //Private Route
 import PrivateRoute from "./components/common/PrivateRoute";
@@ -92,8 +93,15 @@ class App extends Component {
                   <Switch>
                     <PrivateRoute
                       exact
-                      path="/organizations/budget/transactions"
+                      path="/organizations/budget/transactions" //TODO: Change this route name to fit standard
                       component={AddTransaction}
+                    />
+                  </Switch>
+                  <Switch>
+                    <PrivateRoute
+                      exact
+                      path="/edit-transaction"
+                      component={EditTransaction}
                     />
                   </Switch>
                 </div>
