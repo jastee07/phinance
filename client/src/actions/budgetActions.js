@@ -34,6 +34,18 @@ export const addTransaction = (transData, bud_id, history) => dispatch => {
     );
 };
 
+// Delete Transaction from budget
+export const deleteTransaction = (tran_id, bud_id, history) => dispatch => {
+  axios
+    .delete(`/api/organizations/budget/${bud_id}/transactions/${tran_id}`)
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Profile loading
 export const setBudgetLoading = () => {
   return {
