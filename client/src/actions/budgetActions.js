@@ -47,3 +47,17 @@ export const clearCurrentBudget = () => {
     type: CLEAR_CURRENT_BUDGET
   };
 };
+
+//Add Budget
+export const addBudget = (budgetData, history) => dispatch => {
+  axios
+    .post("/api/organizations/budget", budgetData)
+    .then(res => history.push("/dashboard"))
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
