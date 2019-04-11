@@ -9,7 +9,7 @@ class TransactionList extends Component {
   render() {
     const { budget } = this.props.budget;
 
-    const transList = budget.transactions.map(tran => (
+    const transList = this.props.transactions.map(tran => (
       <tr key={tran._id}>
         <td>{tran.title}</td>
         <td>{tran.amount}</td>
@@ -25,7 +25,6 @@ class TransactionList extends Component {
               <th />
               <th>Title</th>
               <th>Amount</th>
-              <th />
             </tr>
             {transList}
           </thead>

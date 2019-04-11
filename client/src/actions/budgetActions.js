@@ -21,6 +21,19 @@ export const setCurrentBudget = id => dispatch => {
     .catch(err => console.log(err));
 };
 
+// Add Transaction to budget
+export const addTransaction = (transData, bud_id, history) => dispatch => {
+  axios
+    .post(`/budget/${bud_id}/transactions`, transData)
+    .then(res => history.push("/dashboard"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Profile loading
 export const setBudgetLoading = () => {
   return {

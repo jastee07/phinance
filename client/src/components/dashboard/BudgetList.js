@@ -6,6 +6,8 @@ import { setCurrentBudget } from "./../../actions/budgetActions";
 
 class BudgetList extends Component {
   onBudgetClick(id) {
+    console.log("Budget Clicked!");
+
     this.props.setCurrentBudget(id);
   }
 
@@ -16,25 +18,23 @@ class BudgetList extends Component {
           <Link
             to="/organizations/budget"
             onClick={this.onBudgetClick.bind(this, bud._id)}
+            style={{ textDecoration: "none", color: "#858796" }}
           >
             {bud.title}
           </Link>
         </td>
         <td>{bud.amount}</td>
-        <td>{bud.revenue}</td>
       </tr>
     ));
 
     return (
       <div>
-        <h4 className="mb-14">Budgets</h4> 
+        <h2 className="mb-4">Budgets</h2>
         <table className="table">
           <thead>
             <tr>
               <th>Title</th>
               <th>Amount</th>
-              <th>Revenue</th>
-              <th />
             </tr>
             {budget}
           </thead>

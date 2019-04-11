@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { getCurrentUser } from "../../actions/userActions";
 import { getCurrentOrg } from "../../actions/orgActions";
 import Spinner from "../common/Spinner";
@@ -11,6 +12,7 @@ class BudgetDashboard extends Component {
     super();
 
     this.totalUpArray = this.totalUpArray.bind(this);
+    this.onAddTransClick = this.onAddTransClick.bind(this);
   }
 
   totalUpArray(arr) {
@@ -21,6 +23,12 @@ class BudgetDashboard extends Component {
     }
   }
 
+  onAddTransClick(bud_id) {
+    this.props.history.push("/organizations/budget/transactions");
+
+    console.log("Add Transaction Clicked");
+  }
+
   render() {
     const { budget, loading } = this.props.budget;
 
@@ -29,18 +37,37 @@ class BudgetDashboard extends Component {
     if (budget === null || loading) {
       dashboardContent = <Spinner />;
     } else {
-      const { transactions } = this.props.budget;
+      const budTransactions = budget.transactions;
 
       dashboardContent = (
         <div>
           <div className="row">
-            <div className="col-12">
-              <h1>Hello {budget.title}</h1>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-12">
-              <TransactionList />
+            <div className="col-6">
+              <div className="row">
+                <div className="col-12">
+                  <h1>{budget.title} Budget Dashboard</h1>
+                </div>
+              </div>
+              <div className="row form-group">
+                <div className="col-6">
+                  <button
+                    className="btn btn-primary btn-icon-split"
+                    onClick={() => {
+                      this.onAddTransClick(budget._id);
+                    }}
+                  >
+                    <span className="icon text-white-50">
+                      <i className="fas fa-money-bill-alt" />
+                    </span>
+                    <span className="text">Add Transacation</span>
+                  </button>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-10">
+                  <TransactionList transactions={budTransactions} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -62,4 +89,4 @@ const mapStateToProps = state => ({
   budget: state.budget
 });
 
-export default connect(mapStateToProps)(BudgetDashboard);
+export default connect(mapStateToProps)(withRouter(BudgetDashboard));

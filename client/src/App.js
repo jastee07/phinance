@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser } from "./actions/authActions";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -12,6 +12,8 @@ import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import BudgetDashboard from "./components/budget/BudgetDashboard";
 import AddBudget from "./components/budget/AddBudget";
+import AddTransaction from "./components/budget/AddTransaction";
+
 //Private Route
 import PrivateRoute from "./components/common/PrivateRoute";
 
@@ -29,15 +31,13 @@ if (localStorage.jwtToken) {
 
   //Check for expired token
   const currentTime = Date.now() / 1000;
-  /*if (decoded.exp < currentTime) {
+  if (decoded.exp < currentTime) {
     //Logout user
     store.dispatch(logoutUser());
 
-    //CLear current profile
-    store.dispatch(clearCurrentProfile());
     //Redirect to login
-    window.location.href = "/login";
-  }*/
+    window.location.href = "/";
+  }
 }
 
 class App extends Component {
@@ -47,13 +47,23 @@ class App extends Component {
         <Router>
           <div className="App">
             <div className="row">
-              <div className="col-3">
+              <div className="col-1">
                 <Sidebar />
               </div>
-              <div className="col-9">
-                <div className="container">
+              <div className="col-11">
+                <div
+                  className="container-fluid"
+                  style={{ marginLeft: "2%", marginRight: "2%" }}
+                >
                   <Route exact path="/" component={Login} />
                   <Route exact path="/register" component={RegisterOrg} />
+                  <Route exact path="/login" component={Login} />
+                  <Route
+                    exact
+                    path="/organizations/register"
+                    component={RegisterOrg}
+                  />
+                  <Route exact path="/organizations/:id" />
                   <Switch>
                     <PrivateRoute
                       exact
@@ -80,6 +90,13 @@ class App extends Component {
                       exact
                       path="/budget/:id"
                       component={BudgetDashboard}
+                    />
+                  </Switch>
+                  <Switch>
+                    <PrivateRoute
+                      exact
+                      path="/organizations/budget/transactions"
+                      component={AddTransaction}
                     />
                   </Switch>
                 </div>
