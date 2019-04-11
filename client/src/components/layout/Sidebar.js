@@ -51,9 +51,16 @@ class Sidebar extends Component {
         </li>
 
         <li className="nav-item">
-          <Link className="nav-link" to="users/register">
+          <Link className="nav-link" to="admin/new-member">
             <i className="fas fa-fw fa-user-friends" />
             <span> Add User</span>
+          </Link>
+        </li>
+
+        <li className="nav-item">
+          <Link className="nav-link" to="/add-budget">
+            <i className="fas fa-money-bill-wave-alt" />
+            <span> Add Budget</span>
           </Link>
         </li>
 
@@ -97,7 +104,7 @@ class Sidebar extends Component {
         </li>
 
         <li className="nav-item">
-          <a className="nav-link" href="organizations/register">
+          <a className="nav-link" to="/register">
             <i className="fas fa-fw fa-user-plus" />
             <span> Sign Up</span>
           </a>
