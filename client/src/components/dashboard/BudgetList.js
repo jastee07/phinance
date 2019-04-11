@@ -27,7 +27,7 @@ class BudgetList extends Component {
 
     return (
       <div>
-        <h4 className="mb-14">Budgets</h4>
+        <h4 className="mb-14">Budgets</h4> 
         <table className="table">
           <thead>
             <tr>

@@ -11,7 +11,7 @@ import RegisterUser from "./components/auth/RegisterUser";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import BudgetDashboard from "./components/budget/BudgetDashboard";
-
+import AddBudget from "./components/budget/AddBudget";
 //Private Route
 import PrivateRoute from "./components/common/PrivateRoute";
 
@@ -53,12 +53,7 @@ class App extends Component {
               <div className="col-9">
                 <div className="container">
                   <Route exact path="/" component={Login} />
-                  <Route
-                    exact
-                    path="/organizations/register"
-                    component={RegisterOrg}
-                  />
-                  <Route exact path="/organizations/:id" />
+                  <Route exact path="/register" component={RegisterOrg} />
                   <Switch>
                     <PrivateRoute
                       exact
@@ -69,14 +64,21 @@ class App extends Component {
                   <Switch>
                     <PrivateRoute
                       exact
-                      path="/users/register"
+                      path="/admin/new-member"
                       component={RegisterUser}
                     />
                   </Switch>
                   <Switch>
                     <PrivateRoute
                       exact
-                      path="/organizations/budget"
+                      path="/add-budget"
+                      component={AddBudget}
+                    />
+                  </Switch>
+                  <Switch>
+                    <PrivateRoute
+                      exact
+                      path="/budget/:id"
                       component={BudgetDashboard}
                     />
                   </Switch>
