@@ -52,6 +52,7 @@ class BudgetList extends Component {
             <tr>
               <th>Title</th>
               <th>Amount</th>
+              <th />
             </tr>
             {budget}
           </thead>

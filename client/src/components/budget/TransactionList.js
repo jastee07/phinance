@@ -4,14 +4,26 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import {
   setCurrentBudget,
-  deleteTransaction
+  deleteTransaction,
+  addTransaction
 } from "./../../actions/budgetActions";
 import BudgetDashboard from "./BudgetDashboard";
 import { withRouter } from "react-router-dom";
 
 class TransactionList extends Component {
-  onDeleteTranClick(tran_id) {
+  onEditTranClick(tran_id) {
     this.props.deleteTransaction(
+      tran_id,
+      this.props.budget.budget._id,
+      this.props.history
+    );
+
+    //"Refresh" page
+    window.location.href = "/budget";
+  }
+
+  onDeleteTranClick(tran_id) {
+    this.props.addTransaction(
       tran_id,
       this.props.budget.budget._id,
       this.props.history
@@ -29,7 +41,12 @@ class TransactionList extends Component {
         <td>{tran.title}</td>
         <td>{tran.amount}</td>
         <td>
-          <button className="btn btn-primary">Edit</button>
+          <button
+            className="btn btn-primary"
+            onClick={this.onEditTranClick.bind(this, tran._id)}
+          >
+            Edit
+          </button>
         </td>
         <td>
           <button
@@ -62,6 +79,7 @@ class TransactionList extends Component {
 
 TransactionList.propTypes = {
   deleteTransaction: PropTypes.func.isRequired,
+  addTransaction: PropTypes.func.isRequired,
   budget: PropTypes.object.isRequired
 };
 
@@ -71,5 +89,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { deleteTransaction }
+  { deleteTransaction, addTransaction }
 )(withRouter(TransactionList));

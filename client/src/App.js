@@ -47,14 +47,11 @@ class App extends Component {
         <Router>
           <div className="App">
             <div className="row">
-              <div className="col-1">
+              <div className="col-2">
                 <Sidebar />
               </div>
-              <div className="col-11">
-                <div
-                  className="container-fluid"
-                  style={{ marginLeft: "2%", marginRight: "2%" }}
-                >
+              <div className="col-10">
+                <div className="container-fluid">
                   <Route exact path="/" component={Login} />
                   <Route exact path="/register" component={RegisterOrg} />
                   <Route exact path="/login" component={Login} />

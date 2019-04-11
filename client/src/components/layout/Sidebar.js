@@ -46,7 +46,7 @@ class Sidebar extends Component {
         <li className="nav-item">
           <a className="nav-link" href="#">
             <i className="fas fa-fw fa-user-edit" />
-            <span> Edit Profile</span>
+            <span>Edit Profile</span>
           </a>
         </li>
 
