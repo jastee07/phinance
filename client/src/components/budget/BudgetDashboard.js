@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { getCurrentUser } from "../../actions/userActions";
 import { getCurrentOrg } from "../../actions/orgActions";
+import { setCurrentBudget } from "../../actions/budgetActions";
 import Spinner from "../common/Spinner";
 import TransactionList from "./TransactionList";
 
@@ -13,6 +13,16 @@ class BudgetDashboard extends Component {
 
     this.totalUpArray = this.totalUpArray.bind(this);
     this.onAddTransClick = this.onAddTransClick.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getCurrentOrg();
+
+    //Retrieve budget id from local storage
+    const bud_id = localStorage.getItem("bud_id");
+
+    //Set current budget based on retrieved id in the redux state
+    this.props.setCurrentBudget(bud_id);
   }
 
   totalUpArray(arr) {
@@ -78,6 +88,8 @@ class BudgetDashboard extends Component {
 }
 
 BudgetDashboard.propTypes = {
+  getCurrentOrg: PropTypes.func.isRequired,
+  setCurrentBudget: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   org: PropTypes.object.isRequired,
   budget: PropTypes.object.isRequired
@@ -89,4 +101,7 @@ const mapStateToProps = state => ({
   budget: state.budget
 });
 
-export default connect(mapStateToProps)(withRouter(BudgetDashboard));
+export default connect(
+  mapStateToProps,
+  { getCurrentOrg, setCurrentBudget }
+)(withRouter(BudgetDashboard));

@@ -26,8 +26,7 @@ const MonetaryCard = ({ title, value, icon }) => {
 };
 
 MonetaryCard.propTypes = {
-  name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired
 };
