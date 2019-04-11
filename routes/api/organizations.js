@@ -122,7 +122,7 @@ router.get(
   }
 );
 
-// @route   POST api/organization/budget
+// @route   POST api/organizations/budget
 // @desc    Add budget to organization
 // @access  Private
 router.post(
@@ -142,20 +142,23 @@ router.post(
         .status(400)
         .json({ error: "User needs admin status to do this" });
     }
-    Organization.findById(req.user.organization).then(organization => {
-      const newBudget = {
-        title: req.body.title,
-        amount: req.body.amount,
-        revenue: req.body.revenue
-      };
+    Organization.findById(req.user.organization)
+      .then(organization => {
+        const newBudget = {
+          title: req.body.title,
+          amount: req.body.amount,
+          revenue: req.body.revenue
+        };
 
-      // Add to budgets array
-      organization.budgets.unshift(newBudget);
+        // Add to budgets array
+        organization.budgets.unshift(newBudget);
 
-      organization
-        .save()
-        .then(organization => res.json(organization.budgets[0]));
-    });
+        organization
+          .save()
+          .then(organization => res.json(organization.budgets[0]))
+          .catch(err => res.status(400).json(err));
+      })
+      .catch(err => res.status(400).json(err));
   }
 );
 
@@ -288,9 +291,9 @@ router.post(
           .then(organization =>
             res.json(organization.budgets.id(req.params.bud_id).transactions[0])
           )
-          .catch(err => res.status(400).json(errors));
+          .catch(err => res.status(400).json({ err }));
       })
-      .catch(err => res.status(400).json(errors));
+      .catch(err => res.status(400).json({ error: err }));
   }
 );
 
