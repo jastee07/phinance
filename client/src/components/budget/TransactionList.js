@@ -10,6 +10,17 @@ import BudgetDashboard from "./BudgetDashboard";
 import { withRouter } from "react-router-dom";
 
 class TransactionList extends Component {
+  onEditTranClick(tran_id, tran_title, tran_amount, tran_description, tran_date) {
+    //Store values in local storage
+    localStorage.setItem("tran_id", tran_id);
+    localStorage.setItem("tran_title", tran_title);
+    localStorage.setItem("tran_amount", tran_amount);
+    localStorage.setItem("tran_description", tran_description);
+    localStorage.setItem("tran_date", tran_date);
+
+    this.props.history.push("/edit-transaction");
+  }
+
   onDeleteTranClick(tran_id) {
     this.props.deleteTransaction(
       tran_id,
@@ -29,7 +40,12 @@ class TransactionList extends Component {
         <td>{tran.title}</td>
         <td>{tran.amount}</td>
         <td>
-          <button className="btn btn-primary">Edit</button>
+          <button
+            className="btn btn-primary"
+            onClick={this.onEditTranClick.bind(this, tran._id, tran.title, tran.amount, tran.description, tran.date)}
+          >
+            Edit
+          </button>
         </td>
         <td>
           <button
@@ -48,9 +64,10 @@ class TransactionList extends Component {
         <table className="table">
           <thead>
             <tr>
-              <th />
               <th>Title</th>
               <th>Amount</th>
+              <th />
+              <th />
             </tr>
             {transList}
           </thead>
