@@ -17,7 +17,12 @@ class BudgetDashboard extends Component {
 
   componentDidMount() {
     this.props.getCurrentOrg();
-    this.props.setCurrentBudget();
+
+    //Retrieve budget id from local storage
+    const bud_id = localStorage.getItem("bud_id");
+
+    //Set current budget based on retrieved id in the redux state
+    this.props.setCurrentBudget(bud_id);
   }
 
   totalUpArray(arr) {
@@ -83,8 +88,8 @@ class BudgetDashboard extends Component {
 }
 
 BudgetDashboard.propTypes = {
-  getCurrentOrg: PropTypes.object.isRequired,
-  setCurrentBudget: PropTypes.object.isRequired,
+  getCurrentOrg: PropTypes.func.isRequired,
+  setCurrentBudget: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   org: PropTypes.object.isRequired,
   budget: PropTypes.object.isRequired
