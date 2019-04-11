@@ -88,7 +88,7 @@ class App extends Component {
                   <Switch>
                     <PrivateRoute
                       exact
-                      path="/budget/:id"
+                      path="/budget"
                       component={BudgetDashboard}
                     />
                   </Switch>

@@ -8,6 +8,8 @@ class BudgetList extends Component {
   onBudgetClick(id) {
     console.log("Budget Clicked!");
 
+    localStorage.setItem("bud_id", id);
+
     this.props.setCurrentBudget(id);
   }
 
@@ -16,7 +18,7 @@ class BudgetList extends Component {
       <tr key={bud._id}>
         <td>
           <Link
-            to="/organizations/budget"
+            to="/budget"
             onClick={this.onBudgetClick.bind(this, bud._id)}
             style={{ textDecoration: "none", color: "#858796" }}
           >
