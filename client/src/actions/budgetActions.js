@@ -73,3 +73,13 @@ export const addBudget = (budgetData, history) => dispatch => {
       });
     });
 };
+
+// Delete Budget
+export const deleteBudget = (bud_id, history) => dispatch => {
+  axios.delete(`/api/organizations/budget/${bud_id}`).catch(err =>
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    })
+  );
+};
