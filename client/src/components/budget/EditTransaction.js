@@ -3,7 +3,11 @@ import { Link, withRouter } from "react-router-dom";
 import TextFieldGroup from "../common/TextFieldGroup";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { addTransaction } from "../../actions/budgetActions";
+import isEmpty from "../../validation/is-empty";
+
+import { getCurrentOrg } from "../../actions/orgActions";
+import { addTransaction, editTransaction, setCurrentBudget } from "../../actions/budgetActions";
+
 
 class EditTransaction extends Component {
   constructor(props) {
@@ -20,13 +24,37 @@ class EditTransaction extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.props.getCurrentOrg();
+
+    //Retrieve budget id from local storage
+    const bud_id = localStorage.getItem("bud_id");
+
+    //Set current budget based on retrieved id in the redux state
+    this.props.setCurrentBudget(bud_id);
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
 
-    //NEED TO GET TRANSACTION ID SOMEHOW SO WE KNOW
-    //WHICH TRANSACTION TO EDIT
+    //Retrieve transaction information from local storage
+    const tran_id = localStorage.getItem("tran_id");
+    const tran_title = localStorage.getItem("tran_title");
+    const tran_amount = localStorage.getItem("tran_amount");
+    const tran_description = localStorage.getItem("tran_description");
+    const tran_date = localStorage.getItem("tran_date");
+
+
+    //Set EditTransaction component state equal to local storage date
+    this.setState({
+      id: !isEmpty(tran_id) ? tran_id : "",
+      title: !isEmpty(tran_title) ? tran_title : "",
+      amount: !isEmpty(tran_amount) ? tran_amount : "",
+      description: !isEmpty(tran_description) ? tran_description : "",
+      date: !isEmpty(tran_date) ? tran_date : ""
+    })
   }
 
   onSubmit(e) {
@@ -43,7 +71,7 @@ class EditTransaction extends Component {
 
     console.log(budget);
 
-    this.props.addTransaction(transData, budget._id, this.props.history);
+    this.props.editTransaction(this.state.id, budget._id, transData, this.props.history);
   }
 
   onChange(e) {
@@ -132,6 +160,9 @@ class EditTransaction extends Component {
 
 EditTransaction.propTypes = {
   addTransaction: PropTypes.func.isRequired,
+  editTransaction: PropTypes.func.isRequired,
+  getCurrentOrg: PropTypes.func.isRequired,
+  setCurrentBudget: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   budget: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -145,5 +176,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addTransaction }
+  { addTransaction, editTransaction, getCurrentOrg, setCurrentBudget }
 )(withRouter(EditTransaction));

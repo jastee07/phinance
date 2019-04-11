@@ -5,6 +5,10 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addTransaction } from "../../actions/budgetActions";
 
+import { getCurrentOrg } from "../../actions/orgActions";
+import { setCurrentBudget } from "../../actions/budgetActions";
+
+
 class AddTransaction extends Component {
   constructor(props) {
     super(props);
@@ -18,6 +22,16 @@ class AddTransaction extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getCurrentOrg();
+
+    //Retrieve budget id from local storage
+    const bud_id = localStorage.getItem("bud_id");
+
+    //Set current budget based on retrieved id in the redux state
+    this.props.setCurrentBudget(bud_id);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -129,6 +143,8 @@ class AddTransaction extends Component {
 
 AddTransaction.propTypes = {
   addTransaction: PropTypes.func.isRequired,
+  getCurrentOrg: PropTypes.func.isRequired,
+  setCurrentBudget: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   budget: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -142,5 +158,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { addTransaction }
+  { addTransaction, getCurrentOrg, setCurrentBudget }
 )(withRouter(AddTransaction));

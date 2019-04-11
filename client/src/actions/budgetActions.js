@@ -34,10 +34,27 @@ export const addTransaction = (transData, bud_id, history) => dispatch => {
     );
 };
 
+// Add Transaction to budget
+export const editTransaction = (tran_id, bud_id, transData, history) => dispatch => {
+  console.log(tran_id);
+  console.log(bud_id);
+  console.log(transData);
+
+  axios
+    .put(`/api/organizations/budget/${bud_id}/transactions/${tran_id}`, transData)
+    .then(res => history.push("/budget"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Delete Transaction from budget
 export const deleteTransaction = (tran_id, bud_id, history) => dispatch => {
   axios
-    .delete(`/api/organizations/budget/${bud_id}/transactions/${tran_id}`)
+    .delete(`/ api / organizations / budget / ${bud_id} / transactions / ${tran_id}`)
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -76,7 +93,7 @@ export const addBudget = (budgetData, history) => dispatch => {
 
 // Delete Budget
 export const deleteBudget = (bud_id, history) => dispatch => {
-  axios.delete(`/api/organizations/budget/${bud_id}`).catch(err =>
+  axios.delete(`/ api / organizations / budget / ${bud_id}`).catch(err =>
     dispatch({
       type: GET_ERRORS,
       payload: err.response.data

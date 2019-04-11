@@ -6,8 +6,6 @@ import { setCurrentBudget, deleteBudget } from "../../actions/budgetActions";
 
 class BudgetList extends Component {
   onBudgetClick(id) {
-    console.log("Budget Clicked!");
-
     localStorage.setItem("bud_id", id);
 
     this.props.setCurrentBudget(id);

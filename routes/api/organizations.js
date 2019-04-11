@@ -325,6 +325,7 @@ router.put(
       ) {
         return res.status(404).json({ error: "Transaction does not exist" });
       }
+
       organization.budgets
         .id(req.params.bud_id)
         .transactions.id(req.params.tran_id).title = req.body.title;
@@ -340,8 +341,8 @@ router.put(
               .id(req.params.bud_id)
               .transactions.id(req.params.tran_id)
           )
-        );
-    });
+        ).catch(err => res.status(400).json({ err }));
+    }).catch(err => res.status(400).json({ error: err }));
   }
 );
 
