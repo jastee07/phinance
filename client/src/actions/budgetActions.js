@@ -35,10 +35,9 @@ export const addTransaction = (transData, bud_id, history) => dispatch => {
 };
 
 // Delete Transaction from budget
-export const deleteTransaction = (bud_id, tran_id, history) => dispatch => {
+export const deleteTransaction = (tran_id, bud_id, history) => dispatch => {
   axios
-    .delete(`api/organizations/budget/${bud_id}/transactions/${tran_id}`)
-    .then(res => history.push("/organizations/budget"))
+    .delete(`/api/organizations/budget/${bud_id}/transactions/${tran_id}`)
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

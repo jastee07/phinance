@@ -7,16 +7,18 @@ import {
   deleteTransaction
 } from "./../../actions/budgetActions";
 import BudgetDashboard from "./BudgetDashboard";
+import { withRouter } from "react-router-dom";
 
 class TransactionList extends Component {
-  constructor(props) {
-    super(props);
+  onDeleteTranClick(tran_id) {
+    this.props.deleteTransaction(
+      tran_id,
+      this.props.budget.budget._id,
+      this.props.history
+    );
 
-    this.onDeleteTranClick = this.onDeleteTranClick.bind(this);
-  }
-
-  onDeleteTranClick(tran_id, bud_id) {
-    this.props.deleteTransaction();
+    //"Refresh" page
+    window.location.href = "/budget";
   }
 
   render() {
@@ -30,7 +32,10 @@ class TransactionList extends Component {
           <button className="btn btn-primary">Edit</button>
         </td>
         <td>
-          <button className="btn btn-danger" onClick={this.onDeleteTranClick}>
+          <button
+            className="btn btn-danger"
+            onClick={this.onDeleteTranClick.bind(this, tran._id)}
+          >
             Delete
           </button>
         </td>
@@ -61,10 +66,10 @@ TransactionList.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  budget: state.auth
+  budget: state.budget
 });
 
 export default connect(
   mapStateToProps,
   { deleteTransaction }
-)(TransactionList);
+)(withRouter(TransactionList));
