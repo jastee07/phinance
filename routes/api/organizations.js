@@ -367,10 +367,12 @@ router.delete(
         ) {
           return res.status(404).json({ error: "Transaction does not exist" });
         }
+
         // Splice out of array
         organization.budgets
           .id(req.params.bud_id)
           .transactions.pull({ _id: req.params.tran_id });
+
         // Save
         organization.save().then(organization => res.json({ success: true }));
       })

@@ -108,7 +108,7 @@ class AddTransaction extends Component {
                         href="#"
                         className="btn btn-success btn-icon-split"
                         type="submit"
-                        Value="Submit"
+                        value="Submit"
                       >
                         <span className="icon text-white-50">
                           <i className="fas fa-check" />

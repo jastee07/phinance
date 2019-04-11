@@ -33,10 +33,8 @@ class BudgetDashboard extends Component {
     }
   }
 
-  onAddTransClick(bud_id) {
+  onAddTransClick() {
     this.props.history.push("/organizations/budget/transactions");
-
-    console.log("Add Transaction Clicked");
   }
 
   render() {
@@ -63,7 +61,7 @@ class BudgetDashboard extends Component {
                   <button
                     className="btn btn-primary btn-icon-split"
                     onClick={() => {
-                      this.onAddTransClick(budget._id);
+                      this.onAddTransClick();
                     }}
                   >
                     <span className="icon text-white-50">
