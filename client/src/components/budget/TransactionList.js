@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import {
-  setCurrentBudget,
-  deleteTransaction
-} from "./../../actions/budgetActions";
-import BudgetDashboard from "./BudgetDashboard";
+import { deleteTransaction } from "./../../actions/budgetActions";
 import { withRouter } from "react-router-dom";
 
 class TransactionList extends Component {
-  onEditTranClick(tran_id, tran_title, tran_amount, tran_description, tran_date) {
+  onEditTranClick(
+    tran_id,
+    tran_title,
+    tran_amount,
+    tran_description,
+    tran_date
+  ) {
     //Store values in local storage
     localStorage.setItem("tran_id", tran_id);
     localStorage.setItem("tran_title", tran_title);
@@ -33,8 +34,6 @@ class TransactionList extends Component {
   }
 
   render() {
-    const { budget } = this.props.budget;
-
     const transList = this.props.transactions.map(tran => (
       <tr key={tran._id}>
         <td>{tran.title}</td>
@@ -42,7 +41,14 @@ class TransactionList extends Component {
         <td>
           <button
             className="btn btn-primary"
-            onClick={this.onEditTranClick.bind(this, tran._id, tran.title, tran.amount, tran.description, tran.date)}
+            onClick={this.onEditTranClick.bind(
+              this,
+              tran._id,
+              tran.title,
+              tran.amount,
+              tran.description,
+              tran.date
+            )}
           >
             Edit
           </button>
