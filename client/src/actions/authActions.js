@@ -1,14 +1,8 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-import { getCurrentOrg } from "./orgActions";
 
-import {
-  GET_ERRORS,
-  SET_CURRENT_USER,
-  SET_CURRENT_ORGANIZATION,
-  CURRENT_LOADING
-} from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, CURRENT_LOADING } from "./types";
 
 // Register admin and organization
 export const registerOrganization = (userData, history) => dispatch => {

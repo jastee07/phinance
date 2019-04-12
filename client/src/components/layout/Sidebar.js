@@ -12,7 +12,7 @@ class Sidebar extends Component {
   }
 
   render() {
-    const { isAuthenticated, user } = this.props.auth;
+    const { isAuthenticated } = this.props.auth;
 
     //Only Show Sign In if not authenticated
     const authLinks = (
@@ -44,7 +44,7 @@ class Sidebar extends Component {
         <div className="sidebar-heading">Actions</div>
 
         <li className="nav-item">
-          <a className="nav-link" href="#">
+          <a className="nav-link" href="_blank">
             <i className="fas fa-fw fa-user-edit" />
             <span>Edit Profile</span>
           </a>
@@ -104,7 +104,7 @@ class Sidebar extends Component {
         </li>
 
         <li className="nav-item">
-          <a className="nav-link" to="/register">
+          <a className="nav-link" to="/register" href="_blank">
             <i className="fas fa-fw fa-user-plus" />
             <span> Sign Up</span>
           </a>

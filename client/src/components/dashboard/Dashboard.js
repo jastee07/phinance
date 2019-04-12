@@ -75,12 +75,20 @@ class Dashboard extends Component {
 
       //Filter all NON-revenue items into an array
       const nonRevenueArr = budgetArray.filter(item => {
-        if (!item.revenue) return item;
+        if (!item.revenue) {
+          return item;
+        } else {
+          return {};
+        }
       });
 
       //Filter all revenue items into an array
       const revenueArr = budgetArray.filter(item => {
-        if (item.revenue) return item;
+        if (item.revenue) {
+          return item;
+        } else {
+          return {};
+        }
       });
 
       const totalExpObj = this.totalUpArray(nonRevenueArr);
