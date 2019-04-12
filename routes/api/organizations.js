@@ -163,7 +163,7 @@ router.post(
 );
 
 // @route   PUT api/organization/budget/:id
-// @desc    Add budget to organization
+// @desc    Edit Budget
 // @access  Private
 router.put(
   "/budget/:id",
@@ -316,33 +316,36 @@ router.put(
         .status(400)
         .json({ error: "User needs admin status to do this" });
     }
-    Organization.findById(req.user.organization).then(organization => {
-      // Add to budgets array
-      if (
-        !organization.budgets
+    Organization.findById(req.user.organization)
+      .then(organization => {
+        // Add to budgets array
+        if (
+          !organization.budgets
+            .id(req.params.bud_id)
+            .transactions.id(req.params.tran_id)
+        ) {
+          return res.status(404).json({ error: "Transaction does not exist" });
+        }
+
+        organization.budgets
           .id(req.params.bud_id)
-          .transactions.id(req.params.tran_id)
-      ) {
-        return res.status(404).json({ error: "Transaction does not exist" });
-      }
+          .transactions.id(req.params.tran_id).title = req.body.title;
+        organization.budgets
+          .id(req.params.bud_id)
+          .transactions.id(req.params.tran_id).amount = req.body.amount;
 
-      organization.budgets
-        .id(req.params.bud_id)
-        .transactions.id(req.params.tran_id).title = req.body.title;
-      organization.budgets
-        .id(req.params.bud_id)
-        .transactions.id(req.params.tran_id).amount = req.body.amount;
-
-      organization
-        .save()
-        .then(organization =>
-          res.json(
-            organization.budgets
-              .id(req.params.bud_id)
-              .transactions.id(req.params.tran_id)
+        organization
+          .save()
+          .then(organization =>
+            res.json(
+              organization.budgets
+                .id(req.params.bud_id)
+                .transactions.id(req.params.tran_id)
+            )
           )
-        ).catch(err => res.status(400).json({ err }));
-    }).catch(err => res.status(400).json({ error: err }));
+          .catch(err => res.status(400).json({ err }));
+      })
+      .catch(err => res.status(400).json({ error: err }));
   }
 );
 
