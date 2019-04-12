@@ -65,7 +65,7 @@ router.post("/login", (req, res) => {
 
 // @route   GET api/users/register
 // @desc    Registers a user with member role, admin must do this
-// @access  Private
+// @access  Private/Admin
 router.post(
   "/register",
   passport.authenticate("jwt", { session: false }),
@@ -131,6 +131,33 @@ router.get(
       lastName: req.user.lastName,
       email: req.user.email
     });
+  }
+);
+
+// @route PUT api/users/current
+// @desc Update Current user information
+// @access Private
+router.put(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    User.findById(req.user.id)
+      .then(user => {
+        if (req.user.role === "admin") {
+          user.role = req.body.role;
+        }
+        user.firstName = req.body.firstName;
+        user.lastName = req.body.lastName;
+        user.email = req.body.email;
+
+        user
+          .save()
+          .then(user => res.json({ user: user }))
+          .catch(err =>
+            res.status(400).json({ error: "Unable to update user" })
+          );
+      })
+      .catch(err => res.status(400).json(err));
   }
 );
 
