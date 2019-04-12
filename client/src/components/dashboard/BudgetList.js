@@ -50,7 +50,7 @@ class BudgetList extends Component {
             className="btn btn-primary"
             onClick={this.onEditBudClick.bind(
               this,
-              bud.id,
+              bud._id,
               bud.title,
               bud.amount,
               bud.revenue

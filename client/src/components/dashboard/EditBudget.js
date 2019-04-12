@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import TextFieldGroup from "../common/TextFieldGroup";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -28,10 +28,8 @@ class EditBudget extends Component {
     //Retrieve budget id from local storage
     const bud_id = localStorage.getItem("bud_id");
 
-    //console.log(bud_id);
-
     //Set current budget based on retrieved id in the redux state
-    //this.props.setCurrentBudget(bud_id);
+    this.props.setCurrentBudget(bud_id);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -43,7 +41,8 @@ class EditBudget extends Component {
     const bud_id = localStorage.getItem("bud_id");
     const bud_title = localStorage.getItem("bud_title");
     const bud_amount = localStorage.getItem("bud_amount");
-    const bud_revenue = localStorage.getItem("bud_revenue");
+    const bud_revenue =
+      localStorage.getItem("bud_revenue") === "true" ? true : false;
 
     //Set EditTransaction component state equal to local storage date
     this.setState({
@@ -64,8 +63,6 @@ class EditBudget extends Component {
     };
 
     const { budget } = this.props.budget;
-
-    console.log(budget);
 
     this.props.editBudget(budget._id, budData, this.props.history);
   }
