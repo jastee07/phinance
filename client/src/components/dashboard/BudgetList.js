@@ -3,12 +3,26 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { setCurrentBudget, deleteBudget } from "../../actions/budgetActions";
+import { withRouter } from "react-router-dom";
 
 class BudgetList extends Component {
   onBudgetClick(id) {
     localStorage.setItem("bud_id", id);
 
     this.props.setCurrentBudget(id);
+  }
+
+  onEditBudClick(id, title, amount, revenue) {
+    console.log(id);
+
+    localStorage.setItem("bud_id", id);
+    localStorage.setItem("bud_title", title);
+    localStorage.setItem("bud_amount", amount);
+    localStorage.setItem("bud_revenue", revenue);
+
+    this.props.setCurrentBudget(id);
+
+    this.props.history.push("/edit-budget");
   }
 
   onBudgetDeleteClick(id) {
@@ -31,6 +45,20 @@ class BudgetList extends Component {
           </Link>
         </td>
         <td>{bud.amount}</td>
+        <td>
+          <button
+            className="btn btn-primary"
+            onClick={this.onEditBudClick.bind(
+              this,
+              bud._id,
+              bud.title,
+              bud.amount,
+              bud.revenue
+            )}
+          >
+            Edit
+          </button>
+        </td>
         <td>
           <button
             className="btn btn-danger"
@@ -67,4 +95,4 @@ BudgetList.propTypes = {
 export default connect(
   null,
   { setCurrentBudget, deleteBudget }
-)(BudgetList);
+)(withRouter(BudgetList));
