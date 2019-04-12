@@ -1,13 +1,16 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import TextFieldGroup from "../common/TextFieldGroup";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import isEmpty from "../../validation/is-empty";
 
 import { getCurrentOrg } from "../../actions/orgActions";
-import { addTransaction, editTransaction, setCurrentBudget } from "../../actions/budgetActions";
-
+import {
+  addTransaction,
+  editTransaction,
+  setCurrentBudget
+} from "../../actions/budgetActions";
 
 class EditTransaction extends Component {
   constructor(props) {
@@ -46,7 +49,6 @@ class EditTransaction extends Component {
     const tran_description = localStorage.getItem("tran_description");
     const tran_date = localStorage.getItem("tran_date");
 
-
     //Set EditTransaction component state equal to local storage date
     this.setState({
       id: !isEmpty(tran_id) ? tran_id : "",
@@ -54,7 +56,7 @@ class EditTransaction extends Component {
       amount: !isEmpty(tran_amount) ? tran_amount : "",
       description: !isEmpty(tran_description) ? tran_description : "",
       date: !isEmpty(tran_date) ? tran_date : ""
-    })
+    });
   }
 
   onSubmit(e) {
@@ -71,7 +73,12 @@ class EditTransaction extends Component {
 
     console.log(budget);
 
-    this.props.editTransaction(this.state.id, budget._id, transData, this.props.history);
+    this.props.editTransaction(
+      this.state.id,
+      budget._id,
+      transData,
+      this.props.history
+    );
   }
 
   onChange(e) {

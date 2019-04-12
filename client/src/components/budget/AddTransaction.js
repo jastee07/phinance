@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import TextFieldGroup from "../common/TextFieldGroup";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -7,7 +7,6 @@ import { addTransaction } from "../../actions/budgetActions";
 
 import { getCurrentOrg } from "../../actions/orgActions";
 import { setCurrentBudget } from "../../actions/budgetActions";
-
 
 class AddTransaction extends Component {
   constructor(props) {
