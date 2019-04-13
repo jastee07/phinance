@@ -18,6 +18,8 @@ import EditBudget from "./components/dashboard/EditBudget";
 
 //Private Route
 import PrivateRoute from "./components/common/PrivateRoute";
+//Admin Route
+import AdminRoute from "./components/common/AdminRoute";
 
 import "./App.css";
 import RegisterOrg from "./components/auth/RegisterOrg";
@@ -71,21 +73,21 @@ class App extends Component {
                     />
                   </Switch>
                   <Switch>
-                    <PrivateRoute
+                    <AdminRoute
                       exact
                       path="/admin/new-member"
                       component={RegisterUser}
                     />
                   </Switch>
                   <Switch>
-                    <PrivateRoute
+                    <AdminRoute
                       exact
                       path="/add-budget"
                       component={AddBudget}
                     />
                   </Switch>
                   <Switch>
-                    <PrivateRoute
+                    <AdminRoute
                       exact
                       path="/edit-budget"
                       component={EditBudget}
@@ -106,7 +108,7 @@ class App extends Component {
                     />
                   </Switch>
                   <Switch>
-                    <PrivateRoute
+                    <AdminRoute
                       exact
                       path="/edit-transaction"
                       component={EditTransaction}
