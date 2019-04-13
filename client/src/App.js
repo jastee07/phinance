@@ -23,6 +23,7 @@ import AdminRoute from "./components/common/AdminRoute";
 
 import "./App.css";
 import RegisterOrg from "./components/auth/RegisterOrg";
+import MembersDashboard from "./components/member/MembersDashboard";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -80,6 +81,13 @@ class App extends Component {
                       exact
                       path="/admin/new-member"
                       component={RegisterUser}
+                    />
+                  </Switch>
+                  <Switch>
+                    <AdminRoute
+                      exact
+                      path="/admin/member-dashboard"
+                      component={MembersDashboard}
                     />
                   </Switch>
                   <Switch>
