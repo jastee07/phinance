@@ -15,9 +15,9 @@ const MonetaryCard = ({ title, value, icon }) => {
                 $ {value}
               </div>
             </div>
-            <div className="col-auto">
+            {/* <div className="col-auto">
               <i className={icon} />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
