@@ -50,70 +50,71 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
-            <div className="row">
-              <div className="col-2">
-                <Sidebar />
-              </div>
-              <div className="col-10">
-                <div className="container-fluid">
-                  <Route exact path="/" component={Login} />
-                  <Route exact path="/register" component={RegisterOrg} />
-                  <Route exact path="/login" component={Login} />
-                  <Route
-                    exact
-                    path="/organizations/register"
-                    component={RegisterOrg}
-                  />
-                  <Route exact path="/organizations/:id" />
-                  <Switch>
-                    <PrivateRoute
+            <div id="wrapper">
+              <Sidebar />
+              <div id="content-wrapper" className="d-flex flex-column">
+                <div id="content">
+                  <div className="container-fluid">
+                    <Route exact path="/" component={Login} />
+                    <Route exact path="/register" component={RegisterOrg} />
+                    <Route exact path="/login" component={Login} />
+                    <Route
                       exact
-                      path="/dashboard"
-                      component={Dashboard}
+                      path="/organizations/register"
+                      component={RegisterOrg}
                     />
-                  </Switch>
-                  <Switch>
-                    <AdminRoute
-                      exact
-                      path="/admin/new-member"
-                      component={RegisterUser}
-                    />
-                  </Switch>
-                  <Switch>
-                    <AdminRoute
-                      exact
-                      path="/add-budget"
-                      component={AddBudget}
-                    />
-                  </Switch>
-                  <Switch>
-                    <AdminRoute
-                      exact
-                      path="/edit-budget"
-                      component={EditBudget}
-                    />
-                  </Switch>
-                  <Switch>
-                    <PrivateRoute
-                      exact
-                      path="/budget"
-                      component={BudgetDashboard}
-                    />
-                  </Switch>
-                  <Switch>
-                    <PrivateRoute
-                      exact
-                      path="/organizations/budget/transactions" //TODO: Change this route name to fit standard
-                      component={AddTransaction}
-                    />
-                  </Switch>
-                  <Switch>
-                    <AdminRoute
-                      exact
-                      path="/edit-transaction"
-                      component={EditTransaction}
-                    />
-                  </Switch>
+                    <Route exact path="/organizations/:id" />
+                    <Switch>
+                      <PrivateRoute
+                        exact
+                        path="/dashboard"
+                        component={Dashboard}
+                      />
+                    </Switch>
+                    <Switch>
+                      <AdminRoute
+                        exact
+                        path="/admin/new-member"
+                        component={RegisterUser}
+                      />
+                    </Switch>
+                    <Switch>
+                      <AdminRoute
+                        exact
+                        path="/add-budget"
+                        component={AddBudget}
+                      />
+                    </Switch>
+                    <Switch>
+                      <AdminRoute
+                        exact
+                        path="/edit-budget"
+                        component={EditBudget}
+                      />
+                    </Switch>
+
+                    <Switch>
+                      <PrivateRoute
+                        exact
+                        path="/budget"
+                        component={BudgetDashboard}
+                      />
+                    </Switch>
+                    <Switch>
+                      <PrivateRoute
+                        exact
+                        path="/organizations/budget/transactions" //TODO: Change this route name to fit standard
+                        component={AddTransaction}
+                      />
+                    </Switch>
+                    <Switch>
+                      <AdminRoute
+                        exact
+                        path="/edit-transaction"
+                        component={EditTransaction}
+                      />
+                    </Switch>
+                  </div>
                 </div>
               </div>
             </div>

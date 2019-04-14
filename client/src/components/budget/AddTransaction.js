@@ -117,17 +117,10 @@ class AddTransaction extends Component {
                           />
                         </div>
                       </div>
-                      <button
-                        href="#"
-                        className="btn btn-success btn-icon-split"
+                      <input
                         type="submit"
-                        value="Submit"
-                      >
-                        <span className="icon text-white-50">
-                          <i className="fas fa-check" />
-                        </span>
-                        <span className="text">Save</span>
-                      </button>
+                        className="btn btn-primary btn-user btn-block"
+                      />
                     </form>
                   </div>
                 </div>
