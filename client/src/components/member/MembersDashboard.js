@@ -7,10 +7,6 @@ import Spinner from "../common/Spinner";
 import MemberList from "./MemberList";
 
 class MembersDashboard extends Component {
-  constructor() {
-    super();
-  }
-
   componentDidMount() {
     this.props.getCurrentOrg();
   }

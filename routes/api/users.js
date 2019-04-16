@@ -107,6 +107,7 @@ router.post(
                 .save()
                 .then(user => {
                   organization.members.push(user);
+                  organization.save();
                   res.json(organization);
                 })
                 .catch(err => console.log(err));
