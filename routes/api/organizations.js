@@ -8,6 +8,7 @@ const passport = require("passport");
 const validateOrgRegisterInput = require("../../validation/orgRegister");
 const validateUserRegisterInput = require("../../validation/userRegister");
 const validateBudgetInput = require("../../validation/budget");
+const validateTransactionInput = require("../../validation/transaction");
 
 //Load User Model
 const User = require("../../models/User");
@@ -106,13 +107,6 @@ router.get(
   "/budget/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    //const { errors, isValid } = validateExperienceInput(req.body);
-
-    // Check Validation
-    // if (!isValid) {
-    //   // Return any errors with 400 status
-    //   return res.status(400).json(errors);
-    // }
     Organization.findById(req.user.organization).then(organization => {
       const budget = organization.budgets.id(req.params.id);
       if (!budget) {
@@ -170,13 +164,14 @@ router.put(
   "/budget/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    //const { errors, isValid } = validateExperienceInput(req.body);
+    const { errors, isValid } = validateBudgetInput(req.body);
 
     // Check Validation
-    // if (!isValid) {
-    //   // Return any errors with 400 status
-    //   return res.status(400).json(errors);
-    // }
+    if (!isValid) {
+      // Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
+
     if (req.user.role !== "admin") {
       return res
         .status(400)
@@ -262,13 +257,13 @@ router.post(
   "/budget/:bud_id/transactions",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    //const { errors, isValid } = validateExperienceInput(req.body);
+    const { errors, isValid } = validateTransactionInput(req.body);
 
     // Check Validation
-    // if (!isValid) {
-    //   // Return any errors with 400 status
-    //   return res.status(400).json(errors);
-    // }
+    if (!isValid) {
+      // Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
     if (req.user.role !== "admin") {
       return res
         .status(400)
@@ -305,13 +300,13 @@ router.put(
   "/budget/:bud_id/transactions/:tran_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    //const { errors, isValid } = validateExperienceInput(req.body);
+    const { errors, isValid } = validateExperienceInput(req.body);
 
     // Check Validation
-    // if (!isValid) {
-    //   // Return any errors with 400 status
-    //   return res.status(400).json(errors);
-    // }
+    if (!isValid) {
+      // Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
     if (req.user.role !== "admin") {
       return res
         .status(400)

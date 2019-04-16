@@ -5,13 +5,11 @@ module.exports = function validateBudgetInput(data) {
   let errors = {};
 
   data.title = !isEmpty(data.title) ? data.title : "";
+  data.amount = (!isEmpty(data.amount) || data.amount !== 0) ? data.amount : "";
 
+  //Check if fields are empty
   if (Validator.isEmpty(data.title)) {
     errors.title = "Title field is required";
-  }
-
-  if (data.amount <= 0) {
-    errors.amount = "Amount must be greater than 0";
   }
 
   return {
