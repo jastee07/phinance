@@ -1,15 +1,19 @@
-import { GET_USER, CLEAR_CURRENT_USER } from "../actions/types";
+import {
+  GET_USER,
+  CLEAR_CURRENT_USER,
+  SET_SELECTED_USER
+} from "../actions/types";
 
 const initialState = {
-  profile: {}
+  selectedUser: {}
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
-    case GET_USER:
+    case SET_SELECTED_USER:
       return {
         ...state,
-        user: action.payload
+        selectedUser: action.payload
       };
     case CLEAR_CURRENT_USER:
       return {
