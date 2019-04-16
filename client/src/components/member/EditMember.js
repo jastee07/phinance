@@ -135,11 +135,11 @@ class EditMember extends Component {
                         onChange={this.onChange}
                         error={errors.date}
                       /> */}
-                      <TextFieldGroup //TODO: This needs to be a dropdown
+                      <TextFieldGroup
                         placeholder="Role (Admin or Member)"
                         name="role"
                         type="text"
-                        value={this.state.role}
+                        value={this.state.role === "admin" ? "Admin" : "Member"}
                         onChange={this.onChange}
                         error={errors.role}
                       />
