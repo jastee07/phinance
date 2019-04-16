@@ -23,6 +23,8 @@ import AdminRoute from "./components/common/AdminRoute";
 
 import "./App.css";
 import RegisterOrg from "./components/auth/RegisterOrg";
+import MembersDashboard from "./components/member/MembersDashboard";
+import EditMember from "./components/member/EditMember";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -81,6 +83,13 @@ class App extends Component {
                     <Switch>
                       <AdminRoute
                         exact
+                        path="/edit-member"
+                        component={EditMember}
+                      />
+                    </Switch>
+                    <Switch>
+                      <AdminRoute
+                        exact
                         path="/add-budget"
                         component={AddBudget}
                       />
@@ -98,6 +107,13 @@ class App extends Component {
                         exact
                         path="/budget"
                         component={BudgetDashboard}
+                      />
+                    </Switch>
+                    <Switch>
+                      <PrivateRoute
+                        exact
+                        path="/members"
+                        component={MembersDashboard}
                       />
                     </Switch>
                     <Switch>

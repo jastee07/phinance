@@ -87,6 +87,7 @@ router.get(
     const errors = {};
 
     Organization.findOne({ _id: req.user.organization })
+      .populate("members", "role firstName lastName email")
       .then(org => {
         if (!org) {
           errors.noorg = "There is no organization for this user";

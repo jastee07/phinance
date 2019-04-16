@@ -1,7 +1,8 @@
-import { GET_ORGANIZATION } from "../actions/types";
+import { GET_ORGANIZATION, ORGANIZATION_LOADING } from "../actions/types";
 
 const initialState = {
-  organization: null
+  organization: null,
+  loading: false
 };
 
 export default function(state = initialState, action) {
@@ -9,7 +10,13 @@ export default function(state = initialState, action) {
     case GET_ORGANIZATION:
       return {
         ...state,
-        organization: action.payload
+        organization: action.payload,
+        loading: false
+      };
+    case ORGANIZATION_LOADING:
+      return {
+        ...state,
+        loading: true
       };
     default:
       return state;
