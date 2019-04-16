@@ -39,6 +39,9 @@ router.post("/register", (req, res) => {
     if (user) {
       return res.status(400).json({ email: "email already exists" });
     } else {
+      //TODO: NEED TO LOOK FOR PREEXISTING ORGANIZATION FIRST AND 
+      //ADD TO THAT IF POSSIBLE BEFORE CREATING A NEW ONE
+
       const newOrganization = new Organization({
         name: req.body.name
       });
@@ -77,7 +80,7 @@ router.post("/register", (req, res) => {
   });
 });
 
-// @route   GET api/organizations/:id
+// @route   GET api/organizations/
 // @desc    Get Current user's Organization
 // @access  Public
 router.get(
