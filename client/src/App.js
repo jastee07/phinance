@@ -104,6 +104,13 @@ class App extends Component {
                     <Switch>
                       <PrivateRoute
                         exact
+                        path="/members"
+                        component={MembersDashboard}
+                      />
+                    </Switch>
+                    <Switch>
+                      <PrivateRoute
+                        exact
                         path="/organizations/budget/transactions" //TODO: Change this route name to fit standard
                         component={AddTransaction}
                       />

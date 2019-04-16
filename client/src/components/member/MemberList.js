@@ -7,7 +7,9 @@ class MemberList extends Component {
   render() {
     const memList = this.props.organization.members.map(mem => (
       <tr key={mem._id}>
-        <td>{mem._id}</td>
+        <td>{mem.firstName}</td>
+        <td>{mem.lastName}</td>
+        <td>{mem.role}</td>
       </tr>
     ));
 
@@ -17,7 +19,9 @@ class MemberList extends Component {
         <table className="table">
           <thead>
             <tr>
-              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Role</th>
             </tr>
             {memList}
           </thead>
