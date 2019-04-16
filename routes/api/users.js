@@ -134,16 +134,17 @@ router.get(
   }
 );
 
-// @route PUT api/users/current
-// @desc Update Current user information
+// @route PUT api/users/:id
+// @desc Update specific user information
 // @access Private
 router.put(
-  "/current",
+  "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    User.findById(req.user.id)
+    User.findById(req.params.id)
       .then(user => {
         if (req.user.role === "admin") {
+          //TODO: Will need to change this to show error to user or just lock option all together
           user.role = req.body.role;
         }
         user.firstName = req.body.firstName;

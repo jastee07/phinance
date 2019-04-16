@@ -44,10 +44,10 @@ class Sidebar extends Component {
         <div className="sidebar-heading">Actions</div>
 
         <li className="nav-item">
-          <a className="nav-link" href="_blank">
+          <Link className="nav-link" to="/members">
             <i className="fas fa-fw fa-user-edit" />
-            <span> Edit Profile</span>
-          </a>
+            <span> Organization Members</span>
+          </Link>
         </li>
 
         <li className="nav-item">
