@@ -2,12 +2,12 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, SET_CURRENT_USER, CURRENT_LOADING } from "./types";
+import { GET_ERRORS, SET_CURRENT_USER } from "./types";
 
-// Register admin and organization
-export const registerOrganization = (userData, history) => dispatch => {
+// Register User
+export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("/api/organizations/register", userData)
+    .post("/api/users/register", userData)
     .then(res => history.push("/login"))
     .catch(err =>
       dispatch({
@@ -17,17 +17,27 @@ export const registerOrganization = (userData, history) => dispatch => {
     );
 };
 
-// Used by ADMIN to register users
-export const registerUser = (userData, history) => dispatch => {
-  axios
-    .post("/api/users/register", userData)
-    .then(res => history.push("/dashboard"))
+// Register User
+export const registerOrganization = (userData, history) => dispatch => {
+  axios({ method: "post", url: "/api/organizations/register", data: userData })
+    .then(res => history.push("/login"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
       })
     );
+
+  /*
+    .post("/api/organizations/register", userData)
+    .then(res => history.push("/login"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+    */
 };
 
 //Login -get user token
@@ -62,18 +72,13 @@ export const setCurrentUser = decoded => {
   };
 };
 
-// Current data loading
-export const setCurrentLoading = () => {
-  return {
-    type: CURRENT_LOADING
-  };
-};
-
 //Log out user
+
 export const logoutUser = () => dispatch => {
   //Remove token from localStorage
   localStorage.removeItem("jwtToken");
   setAuthToken(false);
   //Set current user to {} which will set isAuthenticated to false
   dispatch(setCurrentUser({}));
+  window.location.href = "/";
 };

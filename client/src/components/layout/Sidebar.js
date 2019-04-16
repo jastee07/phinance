@@ -104,10 +104,10 @@ class Sidebar extends Component {
         </li>
 
         <li className="nav-item">
-          <a className="nav-link" to="/register" href="_blank">
+          <Link className="nav-link" to="/register">
             <i className="fas fa-fw fa-user-plus" />
             <span> Sign Up</span>
-          </a>
+          </Link>
         </li>
       </ul>
     );
