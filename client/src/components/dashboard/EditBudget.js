@@ -20,6 +20,7 @@ class EditBudget extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.toggleRevenue = this.toggleRevenue.bind(this);
   }
 
   componentDidMount() {
