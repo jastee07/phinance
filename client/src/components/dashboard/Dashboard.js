@@ -89,9 +89,6 @@ class Dashboard extends Component {
         }
       });
 
-      console.log(nonRevenueArr);
-      console.log(revenueArr);
-
       const totalExpObj = this.totalUpArray(nonRevenueArr);
       const totalRevObj = this.totalUpArray(revenueArr);
 
@@ -108,6 +105,7 @@ class Dashboard extends Component {
                 <MonetaryCard
                   title="Expenses"
                   value={totalExpObj.amount}
+                  colorStyle="Expenses"
                   icon="fas fa-dollar-sign fa-2x text-gray-300"
                 />
               </div>
@@ -115,6 +113,7 @@ class Dashboard extends Component {
                 <MonetaryCard
                   title="Revenue"
                   value={totalRevObj.amount}
+                  colorStyle="Revenues"
                   icon="fas fa-dollar-sign fa-2x text-gray-300"
                 />
               </div>

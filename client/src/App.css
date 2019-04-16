@@ -11859,10 +11859,8 @@ a:focus {
   color: rgba(255, 255, 255, 0.3);
 }
 
-.sidebar-dark .nav-item .nav-link:active,
-.sidebar-dark .nav-item .nav-link:focus,
-.sidebar-dark .nav-item .nav-link:hover {
-  color: #fff;
+.sidebar-dark .nav-item .nav-link:active, .sidebar-dark .nav-item .nav-link:focus, .sidebar-dark .nav-item .nav-link:hover {
+  color: #42c88b;
 }
 
 .sidebar-dark .nav-item .nav-link:active i,

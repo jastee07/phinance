@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { setCurrentBudget, deleteBudget } from "../../actions/budgetActions";
 import { withRouter } from "react-router-dom";
+import classnames from "classnames";
 
 class BudgetList extends Component {
   onBudgetClick(id) {
@@ -34,7 +35,9 @@ class BudgetList extends Component {
 
   render() {
     const budget = this.props.budget.map(bud => (
-      <tr key={bud._id}>
+      <tr key={bud._id} className={classnames({
+        "table-success": bud.revenue
+      })}>
         <td>
           <Link
             to="/budget"
