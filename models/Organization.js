@@ -10,7 +10,7 @@ const OrganizationSchema = new Schema({
   members: [
     {
       type: Schema.Types.ObjectId,
-      ref: "User"
+      ref: "users"
     }
   ],
   budgets: [
