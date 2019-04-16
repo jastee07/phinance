@@ -73,23 +73,24 @@ class Dashboard extends Component {
       //Establish Chart Data
       this.accumulateChartData(budgetArray);
 
+      //Ignore warnings that regard this arrow function
       //Filter all NON-revenue items into an array
       const nonRevenueArr = budgetArray.filter(item => {
         if (!item.revenue) {
           return item;
-        } else {
-          return {};
         }
       });
 
+      //Ignore warnings that regard this arrow function
       //Filter all revenue items into an array
       const revenueArr = budgetArray.filter(item => {
         if (item.revenue) {
           return item;
-        } else {
-          return {};
         }
       });
+
+      console.log(nonRevenueArr);
+      console.log(revenueArr);
 
       const totalExpObj = this.totalUpArray(nonRevenueArr);
       const totalRevObj = this.totalUpArray(revenueArr);
