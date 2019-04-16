@@ -1,6 +1,11 @@
 import axios from "axios";
 
-import { GET_USER, CLEAR_CURRENT_USER, SET_SELECTED_USER } from "./types";
+import {
+  GET_USER,
+  CLEAR_CURRENT_USER,
+  SET_SELECTED_USER,
+  GET_ERRORS
+} from "./types";
 
 // Get current profile
 export const getCurrentUser = () => dispatch => {
@@ -26,6 +31,19 @@ export const setUserToEdit = memberData => {
     type: SET_SELECTED_USER,
     payload: memberData
   };
+};
+
+// Add Transaction to budget
+export const editMember = (mem_id, memData, history) => dispatch => {
+  axios
+    .put(`/api/users/${mem_id}`, memData)
+    .then(res => history.push("/members"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
 };
 
 // Clear profile

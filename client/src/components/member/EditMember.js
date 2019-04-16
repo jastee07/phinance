@@ -5,6 +5,9 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import isEmpty from "../../validation/is-empty";
 
+import { getCurrentOrg } from "../../actions/orgActions";
+import { editMember } from "../../actions/userActions";
+
 class EditMember extends Component {
   constructor(props) {
     super(props);
@@ -21,10 +24,12 @@ class EditMember extends Component {
   }
 
   componentDidMount() {
-    //TODO: REFRESHING CAUSES THE REDUX STATE TO BE LOST SO MAY NEED TO STORE IT IN LOCAL STATE ONCE RETRIEVED ANYWAYS
+    this.props.getCurrentOrg();
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("About to recieve props");
+
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
@@ -49,9 +54,15 @@ class EditMember extends Component {
       const mem_id = localStorage.getItem("mem_id");
       const mem_role = localStorage.getItem("mem_role");
 
+      console.log(mem_id);
+      console.log(mem_firstName);
+      console.log(mem_lastName);
+      console.log(mem_email);
+      console.log(mem_role);
+
       //Retrieve selected user out of state and set local state equal to it to parse fields
       this.setState({
-        email: !isEmpty(mem_id) ? mem_id : "",
+        id: !isEmpty(mem_id) ? mem_id : "",
         firstName: !isEmpty(mem_firstName) ? mem_firstName : "",
         lastName: !isEmpty(mem_lastName) ? mem_lastName : "",
         email: !isEmpty(mem_email) ? mem_email : "",
@@ -69,6 +80,8 @@ class EditMember extends Component {
       lastName: this.state.lastName,
       role: this.state.role
     };
+
+    this.props.editMember(this.state.id, memData, this.props.history);
   }
 
   onChange(e) {
@@ -163,6 +176,8 @@ class EditMember extends Component {
 }
 
 EditMember.propTypes = {
+  getCurrentOrg: PropTypes.func.isRequired,
+  editMember: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   org: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
@@ -176,4 +191,7 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps)(withRouter(EditMember));
+export default connect(
+  mapStateToProps,
+  { getCurrentOrg, editMember }
+)(withRouter(EditMember));
