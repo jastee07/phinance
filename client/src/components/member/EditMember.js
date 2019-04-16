@@ -28,8 +28,6 @@ class EditMember extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("About to recieve props");
-
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
@@ -53,12 +51,6 @@ class EditMember extends Component {
       const mem_email = localStorage.getItem("mem_email");
       const mem_id = localStorage.getItem("mem_id");
       const mem_role = localStorage.getItem("mem_role");
-
-      console.log(mem_id);
-      console.log(mem_firstName);
-      console.log(mem_lastName);
-      console.log(mem_email);
-      console.log(mem_role);
 
       //Retrieve selected user out of state and set local state equal to it to parse fields
       this.setState({

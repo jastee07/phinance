@@ -15,6 +15,10 @@ class MembersDashboard extends Component {
     this.props.getCurrentOrg();
   }
 
+  onAddMemClick() {
+    this.props.history.push("/admin/new-member");
+  }
+
   render() {
     const { organization, loading } = this.props.org;
 
@@ -34,7 +38,12 @@ class MembersDashboard extends Component {
               </div>
               <div className="row form-group">
                 <div className="col-6">
-                  <button className="btn btn-primary btn-icon-split">
+                  <button
+                    className="btn btn-primary btn-icon-split"
+                    onClick={() => {
+                      this.onAddMemClick();
+                    }}
+                  >
                     <span className="icon text-white-50">
                       <i className="fas fa-user-plus" />
                     </span>
