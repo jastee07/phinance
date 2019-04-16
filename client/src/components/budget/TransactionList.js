@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { deleteTransaction } from "./../../actions/budgetActions";
+
+import {
+  deleteTransaction,
+  addTransaction
+} from "./../../actions/budgetActions";
+
 import { withRouter } from "react-router-dom";
 
 class TransactionList extends Component {
@@ -85,6 +90,7 @@ class TransactionList extends Component {
 
 TransactionList.propTypes = {
   deleteTransaction: PropTypes.func.isRequired,
+  addTransaction: PropTypes.func.isRequired,
   budget: PropTypes.object.isRequired
 };
 
@@ -94,5 +100,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { deleteTransaction }
+  { deleteTransaction, addTransaction }
 )(withRouter(TransactionList));
