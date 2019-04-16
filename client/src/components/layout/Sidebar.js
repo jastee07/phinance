@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+
+import { setUserToEdit } from "../../actions/userActions";
 
 class Sidebar extends Component {
   onLogoutClick(e) {
@@ -11,8 +12,30 @@ class Sidebar extends Component {
     this.props.logoutUser();
   }
 
+  onEditAccountClick(id, firstName, lastName, email, role) {
+    const memData = {
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      role: role
+    };
+
+    console.log(id);
+
+    this.props.setUserToEdit(memData);
+
+    localStorage.setItem("mem_id", id);
+    localStorage.setItem("mem_firstName", firstName);
+    localStorage.setItem("mem_lastName", lastName);
+    localStorage.setItem("mem_email", email);
+    localStorage.setItem("mem_role", role);
+  }
+
   render() {
-    const { isAuthenticated } = this.props.auth;
+    const { isAuthenticated, user } = this.props.auth;
+
+    console.log(user);
 
     //Only Show Sign In if not authenticated
     const authLinks = (
@@ -51,16 +74,27 @@ class Sidebar extends Component {
         </li>
 
         <li className="nav-item">
-          <Link className="nav-link" to="admin/new-member">
-            <i className="fas fa-fw fa-user-friends" />
-            <span> Add User</span>
+          <Link className="nav-link" to="/add-budget">
+            <i className="fas fa-money-bill-wave-alt" />
+            <span> Add Budget</span>
           </Link>
         </li>
 
         <li className="nav-item">
-          <Link className="nav-link" to="/add-budget">
-            <i className="fas fa-money-bill-wave-alt" />
-            <span> Add Budget</span>
+          <Link
+            className="nav-link"
+            to="/edit-member"
+            onClick={this.onEditAccountClick.bind(
+              this,
+              user.id,
+              user.firstName,
+              user.lastName,
+              user.email,
+              user.role
+            )}
+          >
+            <i className="fas fa-fw fa-cog" />
+            <span> Edit Account</span>
           </Link>
         </li>
 
@@ -117,6 +151,7 @@ class Sidebar extends Component {
 }
 
 Sidebar.propTypes = {
+  setUserToEdit: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
@@ -126,5 +161,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, setUserToEdit }
 )(Sidebar);
